@@ -7,26 +7,19 @@ import { MyCheckbox } from '../my-checkbox/my-checkbox';
 })
 export class MyDynamicForm {
 	@Element() el: HTMLElement;
-	@Prop() value: Object;
-
-	@Prop() schema: Object = {
-		properties: {
-			name: { type: 'string' },
-			age: { type: 'number' },
-			subscribe: { type: 'boolean' }
-		}
-	};
+	@Prop() schema: Object = {};
 
 	render() {
 		return (
 			<div>
-				dynamic form {this.value}
+				dynamic form {this.schema}
 				<slot />
 			</div>
 		);
 	}
 
 	componentWillLoad() {
+
 		for (var i = 0; i < this.el.children.length; i++) {
 			let child = this.el.children[i];
 

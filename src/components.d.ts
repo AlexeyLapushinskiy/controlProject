@@ -94,7 +94,6 @@ declare global {
   namespace JSXElements {
     export interface MyDynamicFormAttributes extends HTMLAttributes {
       
-        value?: Object,
         schema?: Object
     }
   }
