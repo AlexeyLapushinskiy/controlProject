@@ -1,4 +1,4 @@
-import { Element, Component, Prop, State } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
 
 @Component({
 	tag: 'my-checkbox',
@@ -6,23 +6,14 @@ import { Element, Component, Prop, State } from '@stencil/core';
 })
 export class MyCheckbox {
 	@Prop() for: string;
-	@Prop() schema: any;
-
-	@Element() el: HTMLElement;
-	@State() prop: any;
 
 	render() {
 		return (
 			<div>
-				<label><input type="checkbox" ></input>checkbox for {this.for} ({this.prop.type})</label>
+				<label>
+					<input type="checkbox" />checkbox for {this.for}
+				</label>
 			</div>
 		);
-	}
-
-	componentWillLoad() {
-    this.prop = this.schema.properties[this.for];
-    if (this.prop.type !== 'boolean') {
-      console.warn('component should not accept', this.for, this.prop)
-    }
 	}
 }

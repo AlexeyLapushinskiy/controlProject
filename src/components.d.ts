@@ -30,8 +30,7 @@ declare global {
   namespace JSXElements {
     export interface MyCheckboxAttributes extends HTMLAttributes {
       
-        for?: string,
-        schema?: any
+        for?: string
     }
   }
 }
@@ -94,7 +93,7 @@ declare global {
   namespace JSXElements {
     export interface MyDynamicFormAttributes extends HTMLAttributes {
       
-        schema?: Object
+        schema?: any
     }
   }
 }
@@ -125,8 +124,7 @@ declare global {
   namespace JSXElements {
     export interface MyTextInputAttributes extends HTMLAttributes {
       
-        for?: string,
-        schema?: any
+        for?: string
     }
   }
 }

@@ -5,24 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
   <title>Stencil Component Starter</title>
   <script src="/build/mycomponent.js"></script>
-  <!-- <script>
-    const schema = {
-		properties: {
-			name: { type: 'string' },
-			age: { type: 'number' },
-			subscribe: { type: 'boolean' }
-		}
-	};
-  </script> -->
 
 </head>
 <body>
 
-  <my-dynamic-form value="schema">
-    <my-text-input for="type"></my-text-input> 
-    <my-text-input for="name"></my-text-input> 
-    <my-checkbox for="age"></my-checkbox> 
-    <my-checkbox for="subscribe"></my-checkbox> 
+  <my-dynamic-form>
+    <my-text-input for="string"></my-text-input>
+    <my-checkbox for="boolean"></my-checkbox> 
   </my-dynamic-form>
 
   <script>
