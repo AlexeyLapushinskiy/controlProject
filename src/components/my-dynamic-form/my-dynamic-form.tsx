@@ -29,8 +29,8 @@ export class MyDynamicForm {
 		for (var i = 0; i < this.el.children.length; i++) {
 			let child = this.el.children[i];
 			let mapKey = child['for'];
-			let mapValue = child;
-			this.mapping[mapKey] = mapValue.localName;
+			let mapValue = child['localName'];
+			this.mapping[mapKey] = mapValue;
 		}
 
 		console.log(this.mapping);

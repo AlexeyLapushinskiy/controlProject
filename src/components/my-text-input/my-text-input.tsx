@@ -1,7 +1,8 @@
 import { Component, Prop } from '@stencil/core';
 
 @Component({
-	tag: 'my-text-input'
+	tag: 'my-text-input',
+	shadow: true
 })
 export class MyTextInput {
 	@Prop() for: string;
