@@ -2,8 +2,8 @@
   "name": "my-name",
   "version": "0.0.1",
   "description": "Stencil Component Starter",
-  "main": "dist/collection/index.js",
-  "types": "dist/collection/index.d.ts",
+  "main": "dist/mycomponent.js",
+  "types": "dist/types/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "files": [
     "dist/"
@@ -18,7 +18,8 @@
     "test.watch": "jest --watch --no-cache"
   },
   "dependencies": {
-    "@stencil/core": "next"
+    "@stencil/core": "next",
+    "ajv": "^6.0.1"
   },
   "devDependencies": {
     "@stencil/dev-server": "latest",

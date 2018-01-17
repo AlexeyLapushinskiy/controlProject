@@ -1,18 +1,23 @@
 import { Component, Prop } from '@stencil/core';
 
 @Component({
-	tag: 'my-checkbox',
+	tag: 'my-button',
 	shadow: true
 })
-export class MyCheckbox {
-	@Prop() for: string;
+export class MyButton {
+  @Prop() for: string;
+
+  validateForm() {
+
+    // let addSchema = ajv.addSchema(schema);
+    // let validate = ajv.compile(schema);
+
+  };
 
 	render() {
 		return (
 			<div>
-				<label>
-					<input type="checkbox" />checkbox for {this.for}
-				</label>
+        <input type="submit" value="Validate" onClick={this.validateForm} />
 			</div>
 		);
 	}

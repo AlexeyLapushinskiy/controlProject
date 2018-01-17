@@ -6,69 +6,6 @@
 
 
 import {
-  MyCheckbox as MyCheckbox
-} from './components/my-checkbox/my-checkbox';
-
-declare global {
-  interface HTMLMyCheckboxElement extends MyCheckbox, HTMLElement {
-  }
-  var HTMLMyCheckboxElement: {
-    prototype: HTMLMyCheckboxElement;
-    new (): HTMLMyCheckboxElement;
-  };
-  interface HTMLElementTagNameMap {
-    "my-checkbox": HTMLMyCheckboxElement;
-  }
-  interface ElementTagNameMap {
-    "my-checkbox": HTMLMyCheckboxElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "my-checkbox": JSXElements.MyCheckboxAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface MyCheckboxAttributes extends HTMLAttributes {
-      
-        for?: string
-    }
-  }
-}
-
-
-import {
-  MyComponent as MyComponent
-} from './components/my-component/my-component';
-
-declare global {
-  interface HTMLMyComponentElement extends MyComponent, HTMLElement {
-  }
-  var HTMLMyComponentElement: {
-    prototype: HTMLMyComponentElement;
-    new (): HTMLMyComponentElement;
-  };
-  interface HTMLElementTagNameMap {
-    "my-component": HTMLMyComponentElement;
-  }
-  interface ElementTagNameMap {
-    "my-component": HTMLMyComponentElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "my-component": JSXElements.MyComponentAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface MyComponentAttributes extends HTMLAttributes {
-      
-        first?: string,
-        last?: string
-    }
-  }
-}
-
-
-import {
   MyDynamicForm as MyDynamicForm
 } from './components/my-dynamic-form/my-dynamic-form';
 
@@ -92,39 +29,7 @@ declare global {
   }
   namespace JSXElements {
     export interface MyDynamicFormAttributes extends HTMLAttributes {
-      
-        schema?: any
-    }
-  }
-}
-
-
-import {
-  MyTextInput as MyTextInput
-} from './components/my-text-input/my-text-input';
-
-declare global {
-  interface HTMLMyTextInputElement extends MyTextInput, HTMLElement {
-  }
-  var HTMLMyTextInputElement: {
-    prototype: HTMLMyTextInputElement;
-    new (): HTMLMyTextInputElement;
-  };
-  interface HTMLElementTagNameMap {
-    "my-text-input": HTMLMyTextInputElement;
-  }
-  interface ElementTagNameMap {
-    "my-text-input": HTMLMyTextInputElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "my-text-input": JSXElements.MyTextInputAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface MyTextInputAttributes extends HTMLAttributes {
-      
-        for?: string
+      schema?: any;
     }
   }
 }
