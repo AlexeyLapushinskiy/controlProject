@@ -1,5 +1,5 @@
-import { Component, Prop } from '@stencil/core';
-// import * as schema from '../schemas/schema.json';
+import { Component, Element, Prop } from '@stencil/core';
+// import 'bootstrap/dist/css/bootstrap.css'
 import * as ajv from 'ajv/dist/ajv.min.js';
 
 
@@ -92,8 +92,11 @@ let validate = ajv.compile(schema);
 	shadow: true
 })
 export class MyButton {
-  @Prop() for: string;
 
+  @Element()
+  element: HTMLElement;
+
+  @Prop() for: string;
 
   validateForm() {
 
@@ -106,11 +109,12 @@ export class MyButton {
     let sourcesValue: any = [];
 
 
-    let myNumberInput: any  = myDinamicForm.shadowRoot.querySelector('my-number-input');
-    let minSchema: any = myNumberInput.shadowRoot.getElementById('min-schema');
-    durationValue.minSchemaValue = minSchema.value;
-    console.log(durationValue);
-    //
+    // let myNumberInputWrap: any  = myDinamicForm.shadowRoot.querySelector('my-number-inputs-wrap');
+    // let shadowOneNumberInput: any = myNumberInputWrap.shadowRoot.querySelector('my-number-input');
+    // let numberInput: any = shadowOneNumberInput.shadowRoot.querySelector('input');
+    // durationValue.minSchemaValue = numberInput.value;
+    // console.log(numberInput);
+
     let myCheckbox: any  = myDinamicForm.shadowRoot.querySelector('my-checkbox');
     let checkbox: any = myCheckbox.shadowRoot.getElementById('check-schema');
     checkboxValue = checkbox.getAttribute("checked") === "true" ? true : false;
@@ -125,9 +129,11 @@ export class MyButton {
     };
 
     let mySources: any  = myDinamicForm.shadowRoot.querySelector('my-text-input-array');
-    let sources: any = mySources.shadowRoot.getElementById('sources');
-    sourcesValue.push(sources.value);
-    console.log(sourcesValue);
+    let shadowSources: any = mySources.shadowRoot.querySelector('my-dropdown');
+    let oneSource: any = shadowSources.shadowRoot.querySelector('select');
+    // let shadowOneSource: any = oneSource.shadowRoot.querySelector('input');
+    // sourcesValue.push(shadowOneSource.value);
+    console.log(oneSource);
 
     let data = {"checked": checkboxValue, "duration": durationValue, "startDate": startDateValue, "endDate": endDateValue, "sources": sourcesValue};
 
@@ -141,10 +147,9 @@ export class MyButton {
   };
 
 	render() {
+
 		return (
-			<div>
-        <input type="submit" value="Validate" onClick={this.validateForm} />
-			</div>
+      <input class="btn btn-lg btn-primary" type="submit" value="Validate" onClick={this.validateForm} />
 		);
 	}
 }

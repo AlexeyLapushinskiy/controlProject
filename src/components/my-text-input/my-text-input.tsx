@@ -7,17 +7,9 @@ import { Component, Prop } from '@stencil/core';
 export class MyTextInput {
 	@Prop() for: string;
 
-	typeWatcher(event: any) {
-	  console.log(event.target.value);
-  };
-
-  nameWatcher(event: any) {
-    console.log(event.target.value);
-  };
-
 	render() {
 		return (
-			<div>
+			<div  class="form-group">
         <label>
           {this.for}<br/>
 				  <input type="text" /><br/><br/>

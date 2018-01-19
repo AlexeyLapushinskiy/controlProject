@@ -10,11 +10,9 @@ export class MyTextInputArray {
 
 	render() {
 		return (
-			<div>
-        <label>
-          {this.for} <br/>
-				  <input id="sources" type="text" /><br/><br/>
-        </label>
+			<div id="sources" class="form-group">
+        {this.for}
+        <my-dropdown></my-dropdown>
 			</div>
 		);
 	}

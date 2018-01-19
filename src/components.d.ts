@@ -97,6 +97,36 @@ declare global {
 
 
 import {
+  MyDropdown as MyDropdown
+} from './components/my-dropdown/my-dropdown';
+
+declare global {
+  interface HTMLMyDropdownElement extends MyDropdown, HTMLElement {
+  }
+  var HTMLMyDropdownElement: {
+    prototype: HTMLMyDropdownElement;
+    new (): HTMLMyDropdownElement;
+  };
+  interface HTMLElementTagNameMap {
+    "my-dropdown": HTMLMyDropdownElement;
+  }
+  interface ElementTagNameMap {
+    "my-dropdown": HTMLMyDropdownElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "my-dropdown": JSXElements.MyDropdownAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface MyDropdownAttributes extends HTMLAttributes {
+      for?: string;
+    }
+  }
+}
+
+
+import {
   MyDynamicForm as MyDynamicForm
 } from './components/my-dynamic-form/my-dynamic-form';
 
@@ -127,7 +157,7 @@ declare global {
 
 
 import {
-  MyNumberInput as MyNumberInput
+  NumberInput as MyNumberInput
 } from './components/my-number-input/my-number-input';
 
 declare global {
@@ -150,36 +180,6 @@ declare global {
   }
   namespace JSXElements {
     export interface MyNumberInputAttributes extends HTMLAttributes {
-      for?: string;
-    }
-  }
-}
-
-
-import {
-  MyButton as MyNumberInputsWrap
-} from './components/my-number-inputs-wrap/my-number-inputs-wrap';
-
-declare global {
-  interface HTMLMyNumberInputsWrapElement extends MyNumberInputsWrap, HTMLElement {
-  }
-  var HTMLMyNumberInputsWrapElement: {
-    prototype: HTMLMyNumberInputsWrapElement;
-    new (): HTMLMyNumberInputsWrapElement;
-  };
-  interface HTMLElementTagNameMap {
-    "my-number-inputs-wrap": HTMLMyNumberInputsWrapElement;
-  }
-  interface ElementTagNameMap {
-    "my-number-inputs-wrap": HTMLMyNumberInputsWrapElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "my-number-inputs-wrap": JSXElements.MyNumberInputsWrapAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface MyNumberInputsWrapAttributes extends HTMLAttributes {
       for?: string;
     }
   }

@@ -17,10 +17,9 @@ export class MyCheckbox {
 
 	render() {
 		return (
-			<div>
-        <br/><br/>
+			<div  class="checkbox">
 				<label>
-          checkbox for {this.for}
+          checkbox for {this.for}<br/>
 					<input type="checkbox" id="check-schema" onClick={this.checkWatcher} /><br/><br/>
 				</label>
 			</div>

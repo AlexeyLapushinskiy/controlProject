@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "@stencil/core": "next",
-    "ajv": "^6.0.1"
+    "ajv": "^6.0.1",
+    "bootstrap": "^4.0.0"
   },
   "devDependencies": {
     "@stencil/dev-server": "latest",

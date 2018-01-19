@@ -4,14 +4,8 @@ import { Component, Prop } from '@stencil/core';
 	tag: 'my-number-input',
 	shadow: true
 })
-export class MyNumberInput {
+export class NumberInput {
   @Prop() for: string;
-
-  // setValue (event) {
-  //   let currentValue = event.currentTarget.value;
-  //   event.currentTarget.setAttribute("value", currentValue);
-  //   console.log(event.currentTarget.getAttribute("value"));
-  // };
 
 	render() {
 
