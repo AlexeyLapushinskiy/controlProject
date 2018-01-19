@@ -8,10 +8,11 @@ export class MyCheckbox {
 	@Prop() for: string;
 
   checkWatcher(event: any) {
-    // let checkbox = document.getElementById("check");
-    // console.log(checkbox);
-    // let checkboxAttribut = checkbox.getAttribute("checked");
-    // checkboxAttribut === "checked" ? console.log("checked") : console.log("unchecked");
+    if(event.currentTarget.getAttribute("checked") === "true") {
+      event.currentTarget.setAttribute("checked", "false");
+    } else {
+      event.currentTarget.setAttribute("checked", "true");
+    }
   };
 
 	render() {
@@ -20,7 +21,7 @@ export class MyCheckbox {
         <br/><br/>
 				<label>
           checkbox for {this.for}
-					<input type="checkbox" id="check" onClick={this.checkWatcher} /><br/><br/>
+					<input type="checkbox" id="check-schema" onClick={this.checkWatcher} /><br/><br/>
 				</label>
 			</div>
 		);

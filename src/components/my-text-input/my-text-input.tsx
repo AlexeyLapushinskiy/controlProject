@@ -19,8 +19,8 @@ export class MyTextInput {
 		return (
 			<div>
         <label>
-          {this.for} <br/>
-				  <input type="text" onInput={this.for === "type" ? this.typeWatcher : this.nameWatcher} /><br/><br/>
+          {this.for}<br/>
+				  <input type="text" /><br/><br/>
         </label>
 			</div>
 		);

@@ -6,17 +6,16 @@
   <title>Stencil Component Starter</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ajv/6.0.1/ajv.min.js"></script>
   <script src="/build/mycomponent.js"></script>
-
 </head>
 <body>
 
   <my-dynamic-form>
+    <my-checkbox id="my-boolean-array" for="boolean"></my-checkbox>
     <!--<my-number-inputs-wrap for="object">-->
-      <my-number-input for="object"></my-number-input>
+      <my-number-input id="my-object-input-array" for="object"></my-number-input>
     <!--</my-number-inputs-wrap>-->
     <my-text-input for="string"></my-text-input>
-    <my-text-input for="array"></my-text-input>
-    <my-checkbox for="boolean"></my-checkbox>
+    <my-text-input-array for="array"></my-text-input-array>
     <my-button for="submit"></my-button>
   </my-dynamic-form>
 
@@ -107,21 +106,6 @@
          }
        }
      };
-
-     let addSchema = ajv.addSchema(schema);
-
-//    let validate = ajv.compile(schema);
-
-     function validateForm() {
-       test(schema, validate);
-     };
-
-
-     function test(data) {
-       let valid = validate(data);
-       if (valid) console.log('Valid!');
-       else console.log('Invalid: ' + ajv.errorsText(validate.errors));
-     }
 
     const dynamicForm = document.querySelector('my-dynamic-form');
     dynamicForm.schema = schema

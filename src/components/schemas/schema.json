@@ -1,9 +1,4 @@
-import { Component, Prop } from '@stencil/core';
-// import * as schema from '../schemas/schema.json';
-import * as ajv from 'ajv/dist/ajv.min.js';
-
-
-const schema = {
+{
   "definitions": {},
   "$id": "http://json-schema.org/draft-06/schema#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -84,67 +79,4 @@ const schema = {
       "type": "submit"
     }
   }
-};
-let validate = ajv.compile(schema);
-
-@Component({
-	tag: 'my-button',
-	shadow: true
-})
-export class MyButton {
-  @Prop() for: string;
-
-
-  validateForm() {
-
-    let myDinamicForm: any  = document.querySelector('my-dynamic-form');
-
-    let startDateValue: string = null;
-    let endDateValue: string = null;
-    let checkboxValue: boolean = null;
-    let minSchemaValue: number = null;
-    let sourcesValue: any = null;
-
-
-    let myNumberInput: any  = myDinamicForm.shadowRoot.querySelector('my-number-input');
-    let minSchema: any = myNumberInput.shadowRoot.getElementById('min-schema');
-    minSchemaValue = minSchema.value;
-    console.log(minSchemaValue);
-    //
-    let myCheckbox: any  = myDinamicForm.shadowRoot.querySelector('my-checkbox');
-    let checkbox: any = myCheckbox.shadowRoot.getElementById('check-schema');
-    checkboxValue = checkbox.getAttribute("checked") === "true" ? true : false;
-    console.log(checkboxValue);
-
-    let myDates: any  = myDinamicForm.shadowRoot.querySelectorAll('my-text-input');
-    for (let el of myDates) {
-      let shadowEl: any = el.shadowRoot.querySelector('label');
-      let elText: string = shadowEl.innerText;
-      let elValue: string = el.shadowRoot.querySelector('input').value;
-      elText.trim() === "startDate" ?  startDateValue = elValue : endDateValue = elValue;
-    };
-
-    let mySources: any  = myDinamicForm.shadowRoot.querySelector('my-text-input-array');
-    let sources: any = mySources.shadowRoot.getElementById('sources');
-    sourcesValue = sources.value;
-    console.log(typeof(sourcesValue));
-
-    let data = {"checked": checkboxValue, "duration": {}, "startDate": startDateValue, "endDate": endDateValue, "sources": []};
-
-    let valid = validate(data);
-    if (valid) {
-      console.log("Valid!");
-    } else {
-      console.log('Invalid: ' + ajv.errorsText(validate.errors));
-    }
-
-  };
-
-	render() {
-		return (
-			<div>
-        <input type="submit" value="Validate" onClick={this.validateForm} />
-			</div>
-		);
-	}
 }
