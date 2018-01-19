@@ -102,14 +102,14 @@ export class MyButton {
     let startDateValue: string = null;
     let endDateValue: string = null;
     let checkboxValue: boolean = null;
-    let minSchemaValue: number = null;
-    let sourcesValue: any = null;
+    let durationValue: any = {};
+    let sourcesValue: any = [];
 
 
     let myNumberInput: any  = myDinamicForm.shadowRoot.querySelector('my-number-input');
     let minSchema: any = myNumberInput.shadowRoot.getElementById('min-schema');
-    minSchemaValue = minSchema.value;
-    console.log(minSchemaValue);
+    durationValue.minSchemaValue = minSchema.value;
+    console.log(durationValue);
     //
     let myCheckbox: any  = myDinamicForm.shadowRoot.querySelector('my-checkbox');
     let checkbox: any = myCheckbox.shadowRoot.getElementById('check-schema');
@@ -126,10 +126,10 @@ export class MyButton {
 
     let mySources: any  = myDinamicForm.shadowRoot.querySelector('my-text-input-array');
     let sources: any = mySources.shadowRoot.getElementById('sources');
-    sourcesValue = sources.value;
-    console.log(typeof(sourcesValue));
+    sourcesValue.push(sources.value);
+    console.log(sourcesValue);
 
-    let data = {"checked": checkboxValue, "duration": {}, "startDate": startDateValue, "endDate": endDateValue, "sources": []};
+    let data = {"checked": checkboxValue, "duration": durationValue, "startDate": startDateValue, "endDate": endDateValue, "sources": sourcesValue};
 
     let valid = validate(data);
     if (valid) {
