@@ -102,43 +102,15 @@ export class MyButton {
 
     let myDinamicForm: any  = document.querySelector('my-dynamic-form');
 
-    let startDateValue: string = null;
-    let endDateValue: string = null;
-    let checkboxValue: boolean = null;
-    let durationValue: any = {};
-    let sourcesValue: any = [];
-
-
-    let myNumberInput: any  = myDinamicForm.shadowRoot.querySelectorAll('my-number-input');
-    let el: HTMLElement = null;
-    for(el of myNumberInput) {
-      let labelText: string  = el.shadowRoot.querySelector('label').innerText;
-      let inputValue: string  = el.shadowRoot.querySelector('input').value;
-      labelText.trim() === "min" ? durationValue.min = parseInt(inputValue) : durationValue.max = parseInt(inputValue);
-    }
-
-    let myCheckbox: any  = myDinamicForm.shadowRoot.querySelector('my-checkbox');
-    let checkbox: any = myCheckbox.shadowRoot.getElementById('check-schema');
-    checkboxValue = checkbox.getAttribute("checked") === "true" ? true : false;
-
-    let myDates: any  = myDinamicForm.shadowRoot.querySelectorAll('my-text-input');
-    for (let el of myDates) {
-      let shadowEl: any = el.shadowRoot.querySelector('label');
-      let elText: string = shadowEl.innerText;
-      let elValue: string = el.shadowRoot.querySelector('input').value;
-      elText.trim() === "startDate" ?  startDateValue = elValue : endDateValue = elValue;
-    };
-
-    let myTextInputArray: any  = myDinamicForm.shadowRoot.querySelector('my-text-input-array');
-    let dropdown: any = myTextInputArray.shadowRoot.querySelector('my-dropdown');
-    let select: any = dropdown.shadowRoot.querySelector('select');
-    let options: any = select.querySelectorAll('option');
-    for(el of options) {
-      let optionText: string = el.innerText;
-      sourcesValue.push(optionText);
-    }
+    let checkboxValue: boolean = this.getCheckboxValue(myDinamicForm);
+    let startDateValue: string = this.getStartDateValue(myDinamicForm);
+    let endDateValue: string = this.getEndDateValue(myDinamicForm);
+    let durationValue: any = this.getDurationValue(myDinamicForm);
+    let sourcesValue: any = this.getSourcesValue(myDinamicForm);
 
     let data = {"checked": checkboxValue, "duration": durationValue, "startDate": startDateValue, "endDate": endDateValue, "sources": sourcesValue};
+    console.log("data");
+    console.log(data);
 
     let valid = validate(data);
     if (valid) {
@@ -149,10 +121,71 @@ export class MyButton {
 
   };
 
+  getCheckboxValue (myDinamicForm) {
+    let myCheckbox: any  = myDinamicForm.shadowRoot.querySelector('my-checkbox');
+    let checkbox: any = myCheckbox.shadowRoot.getElementById('check-schema');
+    let checkboxValue = checkbox.getAttribute("checked") === "true" ? true : false;
+    return checkboxValue;
+  };
+
+  getStartDateValue(myDinamicForm) {
+    let myDates: any  = myDinamicForm.shadowRoot.querySelectorAll('my-text-input');
+    let startDateValue: string = null;
+    for (let el of myDates) {
+      let shadowEl: any = el.shadowRoot.querySelector('label');
+      let elText: string = shadowEl.innerText;
+      let elValue: string = el.shadowRoot.querySelector('input').value;
+      if (elText.trim() === "startDate") {
+        startDateValue = elValue;
+      }
+    }
+    return startDateValue;
+  };
+
+  getEndDateValue(myDinamicForm) {
+    let myDates: any  = myDinamicForm.shadowRoot.querySelectorAll('my-text-input');
+    let endDateValue: string = null;
+    for (let el of myDates) {
+      let shadowEl: any = el.shadowRoot.querySelector('label');
+      let elText: string = shadowEl.innerText;
+      let elValue: string = el.shadowRoot.querySelector('input').value;
+      if (elText.trim() === "startDate") {
+        endDateValue = elValue;
+      }
+    }
+    return endDateValue;
+  };
+
+  getDurationValue (myDinamicForm) {
+    let myNumberInput: any  = myDinamicForm.shadowRoot.querySelectorAll('my-number-input');
+    let durationValue: any = {};
+    let el: HTMLElement = null;
+    for(el of myNumberInput) {
+      let labelText: string  = el.shadowRoot.querySelector('label').innerText;
+      let inputValue: string  = el.shadowRoot.querySelector('input').value;
+      labelText.trim() === "min" ? durationValue.min = parseInt(inputValue) : durationValue.max = parseInt(inputValue);
+    }
+    return durationValue;
+  };
+
+  getSourcesValue(myDinamicForm) {
+    let myTextInputArray: any  = myDinamicForm.shadowRoot.querySelector('my-text-input-array');
+    let dropdown: any = myTextInputArray.shadowRoot.querySelector('my-dropdown');
+    let select: any = dropdown.shadowRoot.querySelector('select');
+    let options: any = select.querySelectorAll('option');
+    let sourcesValue: any = [];
+    let el: HTMLElement = null;
+    for(el of options) {
+      let optionText: string = el.innerText;
+      sourcesValue.push(optionText);
+    }
+    return sourcesValue;
+  };
+
 	render() {
 
 		return (
-      <input class="btn btn-lg btn-primary" type="submit" value="Validate" onClick={this.validateForm} />
+      <input class="btn btn-lg btn-primary" type="submit" value="Validate" onClick={() => this.validateForm()} />
 		);
 	}
 }
