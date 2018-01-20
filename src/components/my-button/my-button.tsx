@@ -109,16 +109,17 @@ export class MyButton {
     let sourcesValue: any = [];
 
 
-    // let myNumberInputWrap: any  = myDinamicForm.shadowRoot.querySelector('my-number-inputs-wrap');
-    // let shadowOneNumberInput: any = myNumberInputWrap.shadowRoot.querySelector('my-number-input');
-    // let numberInput: any = shadowOneNumberInput.shadowRoot.querySelector('input');
-    // durationValue.minSchemaValue = numberInput.value;
-    // console.log(numberInput);
+    let myNumberInput: any  = myDinamicForm.shadowRoot.querySelectorAll('my-number-input');
+    let el: HTMLElement = null;
+    for(el of myNumberInput) {
+      let labelText: string  = el.shadowRoot.querySelector('label').innerText;
+      let inputValue: string  = el.shadowRoot.querySelector('input').value;
+      labelText.trim() === "min" ? durationValue.min = parseInt(inputValue) : durationValue.max = parseInt(inputValue);
+    }
 
     let myCheckbox: any  = myDinamicForm.shadowRoot.querySelector('my-checkbox');
     let checkbox: any = myCheckbox.shadowRoot.getElementById('check-schema');
     checkboxValue = checkbox.getAttribute("checked") === "true" ? true : false;
-    console.log(checkboxValue);
 
     let myDates: any  = myDinamicForm.shadowRoot.querySelectorAll('my-text-input');
     for (let el of myDates) {
@@ -128,12 +129,14 @@ export class MyButton {
       elText.trim() === "startDate" ?  startDateValue = elValue : endDateValue = elValue;
     };
 
-    let mySources: any  = myDinamicForm.shadowRoot.querySelector('my-text-input-array');
-    let shadowSources: any = mySources.shadowRoot.querySelector('my-dropdown');
-    let oneSource: any = shadowSources.shadowRoot.querySelector('select');
-    // let shadowOneSource: any = oneSource.shadowRoot.querySelector('input');
-    // sourcesValue.push(shadowOneSource.value);
-    console.log(oneSource);
+    let myTextInputArray: any  = myDinamicForm.shadowRoot.querySelector('my-text-input-array');
+    let dropdown: any = myTextInputArray.shadowRoot.querySelector('my-dropdown');
+    let select: any = dropdown.shadowRoot.querySelector('select');
+    let options: any = select.querySelectorAll('option');
+    for(el of options) {
+      let optionText: string = el.innerText;
+      sourcesValue.push(optionText);
+    }
 
     let data = {"checked": checkboxValue, "duration": durationValue, "startDate": startDateValue, "endDate": endDateValue, "sources": sourcesValue};
 
