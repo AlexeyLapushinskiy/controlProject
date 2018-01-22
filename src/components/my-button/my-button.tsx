@@ -93,12 +93,20 @@ let validate = ajv.compile(schema);
 })
 export class MyButton {
 
-  @State() invalid: boolean = false;
+  /**
+   * @State {string} invalidMessage - message about invalid data.
+   */
+
+  @State() invalidMessage: string = null;
 
   @Element()
   element: HTMLElement;
 
   @Prop() for: string;
+
+  /**
+   * @Function {function} validateForm - call functions for validate all form elements.
+   */
 
   validateForm() {
 
@@ -111,15 +119,10 @@ export class MyButton {
     let sourcesValue: any = this.getSourcesValue(myDinamicForm);
 
     let data = {"checked": checkboxValue, "duration": durationValue, "startDate": startDateValue, "endDate": endDateValue, "sources": sourcesValue};
-    console.log("data");
-    console.log(data);
 
     let valid = validate(data);
-    if (valid) {
-      console.log("Valid!");
-    } else {
-      this.invalid = true;
-      console.log('Invalid: ' + ajv.errorsText(validate.errors));
+    if (!valid) {
+      this.invalidMessage = ajv.errorsText(validate.errors);
     }
 
   };
@@ -187,19 +190,19 @@ export class MyButton {
 
 	render() {
 
-	  let invalidMessage: any = null;
+	  let message: any = null;
 
-	  if (this.invalid === true) {
-	    invalidMessage =
+	  if (this.invalidMessage) {
+      message =
         <div>
-          <span class="invalid-data-message">Invalid data! Please, check your form.</span>
+          <span>{this.invalidMessage}</span>
         </div>;
     }
 
 		return (
 		  <div>
         <input class="btn btn-lg btn-primary" type="submit" value="Validate" onClick={() => this.validateForm()} />
-        {invalidMessage}
+        {message} <br />
       </div>
 		);
 	}
