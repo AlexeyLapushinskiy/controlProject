@@ -2,7 +2,7 @@ exports.config = {
   namespace: 'mycomponent',
   generateDistribution: true,
   bundles: [
-    { components: ['my-component'] }
+    { components: ['my-dynamic-form', 'my-number-input', 'my-text-input', 'my-text-input-array', 'my-checkbox', 'my-button'] }
   ],
   serviceWorker: {
     globPatterns: [
