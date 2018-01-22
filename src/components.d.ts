@@ -29,6 +29,7 @@ declare global {
   }
   namespace JSXElements {
     export interface MyButtonAttributes extends HTMLAttributes {
+      allTitles?: any;
       for?: string;
     }
   }

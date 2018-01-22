@@ -103,6 +103,7 @@ export class MyButton {
   element: HTMLElement;
 
   @Prop() for: string;
+  @Prop() allTitles: any;
 
   /**
    * @Function {function} validateForm - call functions for validate all form elements.
@@ -121,8 +122,19 @@ export class MyButton {
     let data = {"checked": checkboxValue, "duration": durationValue, "startDate": startDateValue, "endDate": endDateValue, "sources": sourcesValue};
 
     let valid = validate(data);
-    if (!valid) {
+    if (valid) {
+      this.invalidMessage = null;
+    } else {
       this.invalidMessage = ajv.errorsText(validate.errors).replace(/\,?\w*\.\w*\./g, "");
+      let x: any = this.invalidMessage.split(" ");
+      Object.keys(this.allTitles).map((title: string) => {
+        for (let el in x) {
+          if (x[el] === title) {
+            x[el] = this.allTitles[title];
+          }
+        }
+      })
+      this.invalidMessage = x.toString().replace(/\,(?!\,)/g, " ");
     }
 
   };

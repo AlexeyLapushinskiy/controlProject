@@ -1,10 +1,12 @@
-import { Element, Component, Prop } from '@stencil/core';
+import { Element, Component, Prop, State } from '@stencil/core';
 
 @Component({
 	tag: 'my-dynamic-form',
 	shadow: true
 })
 export class MyDynamicForm {
+
+  @State() allTitles: any = {};
 
   /**
    * @Prop {any} schema - JSON-schema.
@@ -32,19 +34,25 @@ export class MyDynamicForm {
                 let { type } = this.schema.properties[key].properties[keyProp];
                 let Tag = this.mapping[type];
                 let title = this.schema.properties[key].properties[keyProp].title;
+                this.allTitles[keyProp] = title;
                 return this.form[key].hasOwnProperty(keyProp) ? <Tag for={keyProp} value={JSON.stringify(this.form[key][keyProp])} title={title} /> : null;
               })
             } else {
               let { type } = this.schema.properties[key];
               let Tag = this.mapping[type];
               let title: string = this.schema.properties[key].title;
+              this.allTitles[key] = title;
               if(!title) {
-                this.schema.properties[key].items ? title = this.schema.properties[key].items.title : 'Unnamed field';
+                this.schema.properties[key].items ? title = this.schema.properties[key].items.title : title = 'Unnamed field';
+                this.allTitles[key] = title;
               }
-              return this.form.hasOwnProperty(key) ? <Tag for={key} value={JSON.stringify(this.form[key])}title={title}  /> : null;
-            }
-          })
-          }
+              if (key === "button") {
+                return this.form.hasOwnProperty(key) ? <Tag for={key} value={JSON.stringify(this.form[key])} title={title} allTitles={this.allTitles} /> : null;
+              }
+              return this.form.hasOwnProperty(key) ? <Tag for={key} value={JSON.stringify(this.form[key])} title={title} /> : null;
+              }
+            })
+           }
         </div>
 		);
 	}
