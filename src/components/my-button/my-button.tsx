@@ -1,4 +1,4 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, Element, Prop, State } from '@stencil/core';
 // import 'bootstrap/dist/css/bootstrap.css'
 import * as ajv from 'ajv/dist/ajv.min.js';
 
@@ -93,6 +93,8 @@ let validate = ajv.compile(schema);
 })
 export class MyButton {
 
+  @State() invalid: boolean = false;
+
   @Element()
   element: HTMLElement;
 
@@ -116,6 +118,7 @@ export class MyButton {
     if (valid) {
       console.log("Valid!");
     } else {
+      this.invalid = true;
       console.log('Invalid: ' + ajv.errorsText(validate.errors));
     }
 
@@ -184,8 +187,20 @@ export class MyButton {
 
 	render() {
 
+	  let invalidMessage: any = null;
+
+	  if (this.invalid === true) {
+	    invalidMessage =
+        <div>
+          <span class="invalid-data-message">Invalid data! Please, check your form.</span>
+        </div>;
+    }
+
 		return (
-      <input class="btn btn-lg btn-primary" type="submit" value="Validate" onClick={() => this.validateForm()} />
+		  <div>
+        <input class="btn btn-lg btn-primary" type="submit" value="Validate" onClick={() => this.validateForm()} />
+        {invalidMessage}
+      </div>
 		);
 	}
 }
