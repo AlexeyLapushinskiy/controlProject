@@ -122,7 +122,7 @@ export class MyButton {
 
     let valid = validate(data);
     if (!valid) {
-      this.invalidMessage = ajv.errorsText(validate.errors);
+      this.invalidMessage = ajv.errorsText(validate.errors).replace(/\,?\w*\.\w*\./g, "");
     }
 
   };
