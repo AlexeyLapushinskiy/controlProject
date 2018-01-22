@@ -10,7 +10,7 @@ export class MyCheckbox {
   @Prop() title: string;
 
   /**
-   * @Function {function} checkWatcher - function for changing value of attribute 'checked'.
+   * Function for changing value of attribute 'checked'.
    */
 
   checkWatcher(event: any) {

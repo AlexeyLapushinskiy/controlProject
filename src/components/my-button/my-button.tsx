@@ -106,7 +106,7 @@ export class MyButton {
   @Prop() allTitles: any;
 
   /**
-   * @Function {function} validateForm - call functions for validate all form elements.
+   * Call functions for validate of all form fields.
    */
 
   validateForm() {
@@ -121,20 +121,15 @@ export class MyButton {
 
     let data = {"checked": checkboxValue, "duration": durationValue, "startDate": startDateValue, "endDate": endDateValue, "sources": sourcesValue};
 
+    /**
+     * Check validation and call function for chenage message if data is invalid.
+     */
+
     let valid = validate(data);
     if (valid) {
       this.invalidMessage = null;
     } else {
-      this.invalidMessage = ajv.errorsText(validate.errors).replace(/\,?\w*\.\w*\./g, "");
-      let x: any = this.invalidMessage.split(" ");
-      Object.keys(this.allTitles).map((title: string) => {
-        for (let el in x) {
-          if (x[el] === title) {
-            x[el] = this.allTitles[title];
-          }
-        }
-      })
-      this.invalidMessage = x.toString().replace(/\,(?!\,)/g, " ");
+      this.invalidMessage = this.editMessage();
     }
 
   };
@@ -198,6 +193,19 @@ export class MyButton {
       sourcesValue.push(optionText);
     }
     return sourcesValue;
+  };
+
+  editMessage() {
+    let unchangedMessage: any = ajv.errorsText(validate.errors).replace(/\,?\w*\.\w*\./g, "").split(" ");
+    Object.keys(this.allTitles).map((title: string) => {
+      for (let el in unchangedMessage) {
+        if (unchangedMessage[el] === title) {
+          unchangedMessage[el] = this.allTitles[title];
+        }
+      }
+    })
+    let changedMessage: string = unchangedMessage.toString().replace(/\,(?!\,)/g, " ");
+    return changedMessage;
   };
 
 	render() {
