@@ -6,6 +6,132 @@
 
 
 import {
+  MyButton as MyButton
+} from './components/my-button/my-button';
+
+declare global {
+  interface HTMLMyButtonElement extends MyButton, HTMLElement {
+  }
+  var HTMLMyButtonElement: {
+    prototype: HTMLMyButtonElement;
+    new (): HTMLMyButtonElement;
+  };
+  interface HTMLElementTagNameMap {
+    "my-button": HTMLMyButtonElement;
+  }
+  interface ElementTagNameMap {
+    "my-button": HTMLMyButtonElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "my-button": JSXElements.MyButtonAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface MyButtonAttributes extends HTMLAttributes {
+      allTitles?: any;
+      for?: string;
+    }
+  }
+}
+
+
+import {
+  MyCheckbox as MyCheckbox
+} from './components/my-checkbox/my-checkbox';
+
+declare global {
+  interface HTMLMyCheckboxElement extends MyCheckbox, HTMLElement {
+  }
+  var HTMLMyCheckboxElement: {
+    prototype: HTMLMyCheckboxElement;
+    new (): HTMLMyCheckboxElement;
+  };
+  interface HTMLElementTagNameMap {
+    "my-checkbox": HTMLMyCheckboxElement;
+  }
+  interface ElementTagNameMap {
+    "my-checkbox": HTMLMyCheckboxElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "my-checkbox": JSXElements.MyCheckboxAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface MyCheckboxAttributes extends HTMLAttributes {
+      for?: string;
+      title?: string;
+      value?: string;
+    }
+  }
+}
+
+
+import {
+  MyComponent as MyComponent
+} from './components/my-component/my-component';
+
+declare global {
+  interface HTMLMyComponentElement extends MyComponent, HTMLElement {
+  }
+  var HTMLMyComponentElement: {
+    prototype: HTMLMyComponentElement;
+    new (): HTMLMyComponentElement;
+  };
+  interface HTMLElementTagNameMap {
+    "my-component": HTMLMyComponentElement;
+  }
+  interface ElementTagNameMap {
+    "my-component": HTMLMyComponentElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "my-component": JSXElements.MyComponentAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface MyComponentAttributes extends HTMLAttributes {
+      first?: string;
+      last?: string;
+    }
+  }
+}
+
+
+import {
+  MyDropdown as MyDropdown
+} from './components/my-dropdown/my-dropdown';
+
+declare global {
+  interface HTMLMyDropdownElement extends MyDropdown, HTMLElement {
+  }
+  var HTMLMyDropdownElement: {
+    prototype: HTMLMyDropdownElement;
+    new (): HTMLMyDropdownElement;
+  };
+  interface HTMLElementTagNameMap {
+    "my-dropdown": HTMLMyDropdownElement;
+  }
+  interface ElementTagNameMap {
+    "my-dropdown": HTMLMyDropdownElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "my-dropdown": JSXElements.MyDropdownAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface MyDropdownAttributes extends HTMLAttributes {
+      for?: string;
+      title?: string;
+      value?: string;
+    }
+  }
+}
+
+
+import {
   MyDynamicForm as MyDynamicForm
 } from './components/my-dynamic-form/my-dynamic-form';
 
@@ -31,6 +157,102 @@ declare global {
     export interface MyDynamicFormAttributes extends HTMLAttributes {
       form?: any;
       schema?: any;
+    }
+  }
+}
+
+
+import {
+  NumberInput as MyNumberInput
+} from './components/my-number-input/my-number-input';
+
+declare global {
+  interface HTMLMyNumberInputElement extends MyNumberInput, HTMLElement {
+  }
+  var HTMLMyNumberInputElement: {
+    prototype: HTMLMyNumberInputElement;
+    new (): HTMLMyNumberInputElement;
+  };
+  interface HTMLElementTagNameMap {
+    "my-number-input": HTMLMyNumberInputElement;
+  }
+  interface ElementTagNameMap {
+    "my-number-input": HTMLMyNumberInputElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "my-number-input": JSXElements.MyNumberInputAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface MyNumberInputAttributes extends HTMLAttributes {
+      for?: string;
+      title?: string;
+      value?: string;
+    }
+  }
+}
+
+
+import {
+  MyTextInputArray as MyTextInputArray
+} from './components/my-text-input-array/my-text-input-array';
+
+declare global {
+  interface HTMLMyTextInputArrayElement extends MyTextInputArray, HTMLElement {
+  }
+  var HTMLMyTextInputArrayElement: {
+    prototype: HTMLMyTextInputArrayElement;
+    new (): HTMLMyTextInputArrayElement;
+  };
+  interface HTMLElementTagNameMap {
+    "my-text-input-array": HTMLMyTextInputArrayElement;
+  }
+  interface ElementTagNameMap {
+    "my-text-input-array": HTMLMyTextInputArrayElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "my-text-input-array": JSXElements.MyTextInputArrayAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface MyTextInputArrayAttributes extends HTMLAttributes {
+      for?: string;
+      title?: string;
+      value?: string;
+    }
+  }
+}
+
+
+import {
+  MyTextInput as MyTextInput
+} from './components/my-text-input/my-text-input';
+
+declare global {
+  interface HTMLMyTextInputElement extends MyTextInput, HTMLElement {
+  }
+  var HTMLMyTextInputElement: {
+    prototype: HTMLMyTextInputElement;
+    new (): HTMLMyTextInputElement;
+  };
+  interface HTMLElementTagNameMap {
+    "my-text-input": HTMLMyTextInputElement;
+  }
+  interface ElementTagNameMap {
+    "my-text-input": HTMLMyTextInputElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "my-text-input": JSXElements.MyTextInputAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface MyTextInputAttributes extends HTMLAttributes {
+      for?: string;
+      title?: string;
+      value?: string;
     }
   }
 }

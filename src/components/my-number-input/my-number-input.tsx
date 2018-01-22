@@ -10,7 +10,6 @@ export class NumberInput {
   @Prop() title: string;
 
 	render() {
-
 		return (
 			<div>
         <label>

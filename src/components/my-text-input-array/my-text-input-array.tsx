@@ -9,7 +9,6 @@ export class MyTextInputArray {
 	@Prop() value: string;
 	@Prop() title: string;
 
-
 	render() {
 		return (
 			<div>

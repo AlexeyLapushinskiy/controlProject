@@ -10,9 +10,9 @@ export class MyCheckbox {
   @Prop() title: string;
 
   /**
-   * Function for changing value of attribute 'checked'.
+   * Changing value of 'checked' attribute
+   * @param event
    */
-
   checkWatcher(event: any) {
     if(event.currentTarget.getAttribute("checked") === "true") {
       event.currentTarget.setAttribute("checked", "false");
