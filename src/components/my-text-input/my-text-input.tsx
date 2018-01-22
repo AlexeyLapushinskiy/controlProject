@@ -6,13 +6,17 @@ import { Component, Prop } from '@stencil/core';
 })
 export class MyTextInput {
 	@Prop() for: string;
+	@Prop() value: string;
+	@Prop() title: string;
 
 	render() {
-		return (
+    const parsedValue = this.value ? JSON.parse(this.value): '';
+
+    return (
 			<div  class="form-group">
         <label>
-          {this.for}<br/>
-				  <input type="text" /><br/><br/>
+          {this.title}<br/>
+				  <input type="text" value={parsedValue} /><br/><br/>
         </label>
 			</div>
 		);

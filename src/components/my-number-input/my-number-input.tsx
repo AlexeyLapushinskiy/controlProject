@@ -6,14 +6,16 @@ import { Component, Prop } from '@stencil/core';
 })
 export class NumberInput {
   @Prop() for: string;
+  @Prop() value: string;
+  @Prop() title: string;
 
 	render() {
 
 		return (
 			<div>
         <label>
-          {this.for}<br/>
-          <input id="min-schema" value="" type="number" /><br/><br/>
+          {this.title}<br/>
+          <input id="min-schema" value={this.value} type="number" /><br/><br/>
         </label>
 			</div>
 		);

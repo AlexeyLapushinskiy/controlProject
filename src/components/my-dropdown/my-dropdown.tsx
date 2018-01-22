@@ -6,18 +6,18 @@ import { Component, Prop } from '@stencil/core';
 })
 export class MyDropdown {
   @Prop() for: string;
-
-	mapping: Object = {};
+  @Prop() value: string;
+  @Prop() title: string;
 
 	render() {
-		return (
-			<div class="form-group">
-        <label>The Array Schema</label><br/>
-        <select class="form-control">
-          <option>source1</option>
-          <option>source2</option>
-        </select><br/><br/>
-			</div>
+    const parsedValue = this.value ? JSON.parse(this.value): null;
+
+    return (
+        <select>
+          {parsedValue && parsedValue.map((value) =>
+            <option>{value}</option>
+          )}
+        </select>
 		);
 	}
 }

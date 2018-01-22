@@ -141,7 +141,7 @@ export class MyButton {
       let shadowEl: any = el.shadowRoot.querySelector('label');
       let elText: string = shadowEl.innerText;
       let elValue: string = el.shadowRoot.querySelector('input').value;
-      if (elText.trim() === "startDate") {
+      if (elText.trim() === "The Startdate Schema") {
         startDateValue = elValue;
       }
     }
@@ -155,7 +155,7 @@ export class MyButton {
       let shadowEl: any = el.shadowRoot.querySelector('label');
       let elText: string = shadowEl.innerText;
       let elValue: string = el.shadowRoot.querySelector('input').value;
-      if (elText.trim() === "startDate") {
+      if (elText.trim() === "The Enddate Schema") {
         endDateValue = elValue;
       }
     }
@@ -169,7 +169,7 @@ export class MyButton {
     for(el of myNumberInput) {
       let labelText: string  = el.shadowRoot.querySelector('label').innerText;
       let inputValue: string  = el.shadowRoot.querySelector('input').value;
-      labelText.trim() === "min" ? durationValue.min = parseInt(inputValue) : durationValue.max = parseInt(inputValue);
+      labelText.trim() === "The Min Schema" ? durationValue.min = parseInt(inputValue) : durationValue.max = parseInt(inputValue);
     }
     return durationValue;
   };

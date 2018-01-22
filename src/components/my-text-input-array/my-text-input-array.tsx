@@ -6,13 +6,15 @@ import { Component, Prop } from '@stencil/core';
 })
 export class MyTextInputArray {
 	@Prop() for: string;
+	@Prop() value: string;
+	@Prop() title: string;
 
 
 	render() {
 		return (
-			<div id="sources" class="form-group">
-        {this.for}
-        <my-dropdown></my-dropdown>
+			<div>
+        {this.title}<br/>
+        <my-dropdown value={this.value}></my-dropdown> <br/><br/>
 			</div>
 		);
 	}

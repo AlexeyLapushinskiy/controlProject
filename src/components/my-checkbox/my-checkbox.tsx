@@ -6,6 +6,12 @@ import { Component, Prop } from '@stencil/core';
 })
 export class MyCheckbox {
 	@Prop() for: string;
+  @Prop() value: string;
+  @Prop() title: string;
+
+  /**
+   * @Function {function} checkWatcher - function for changing value of attribute 'checked'.
+   */
 
   checkWatcher(event: any) {
     if(event.currentTarget.getAttribute("checked") === "true") {
@@ -16,11 +22,13 @@ export class MyCheckbox {
   };
 
 	render() {
+	  const parsedValue = this.value ? JSON.parse(this.value): false;
+
 		return (
 			<div  class="checkbox">
 				<label>
-          checkbox for {this.for}<br/>
-					<input type="checkbox" id="check-schema" onClick={this.checkWatcher} /><br/><br/>
+          {this.title}<br/>
+					<input type="checkbox" id="check-schema" onClick={this.checkWatcher} checked={parsedValue} /><br/><br/>
 				</label>
 			</div>
 		);
