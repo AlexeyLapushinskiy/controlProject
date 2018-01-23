@@ -7,6 +7,7 @@ import * as ajv from 'ajv/dist/ajv.min.js';
 })
 export class MyDynamicForm {
   @State() allTitles: any = {};
+  @State() allValues: any = {};
   @State() invalidMessage: string = null;
 
   @Element() el: HTMLElement;
@@ -18,10 +19,20 @@ export class MyDynamicForm {
   @Prop() schema: any;
   @Prop() form: any;
 
-  @Listen('validateForm')
-  validateFormHandler() {
-    this.validateForm();
-  }
+  // @Listen('validateForm')
+  // validateFormHandler() {
+  //   this.validateForm();
+  // };
+
+  @Listen('postValue')
+  postValueHandler(CustomEvent) {
+    console.log(CustomEvent);
+    let value: any = CustomEvent.detail._values.currentValue;
+    let id: any = CustomEvent.detail._values.id;
+    this.allValues[id] = value;
+    console.log(this.allValues);
+  };
+
 
   mapping: Object = {}; // properties of the JSON schema
   validate;
@@ -140,9 +151,9 @@ export class MyDynamicForm {
     let Tag = this.mapping[type];
     let title = propsKeyProps[keyProp].title;
     this.allTitles[keyProp] = title;
-
+    // this.allValues[propsKeyProps[keyProp].$id] = '';
     return this.form[key].hasOwnProperty(keyProp) ?
-      <Tag for={keyProp} value={JSON.stringify(this.form[key][keyProp])} title={title}/> : null;
+      <Tag id={propsKeyProps[keyProp].$id} for={keyProp} value={JSON.stringify(this.form[key][keyProp])} title={title}/> : null;
   };
 
   /**
@@ -159,15 +170,25 @@ export class MyDynamicForm {
       this.allTitles[key] = title;
     }
 
-    if (key === "button") {
-      return this.form.hasOwnProperty(key) ?
-        <Tag for={key} value={JSON.stringify(this.form[key])} title={title} allTitles={this.allTitles}/> : null;
-    }
+    // Object.keys(this.form).map((formProp) => {
+    //
+    //   formProp === props[key].$id ? this.allValues[props[key].$id] = this.form[formProp];
+    // });
 
-    return this.form.hasOwnProperty(key) ? <Tag for={key} value={JSON.stringify(this.form[key])} title={title}/> : null;
+    if (key === "button") {
+      return this.form.hasOwnProperty(key) ? <Tag id={props[key].$id} for={key} value={JSON.stringify(this.form[key])} title={title} allTitles={this.allTitles}/> : null;
+    }
+    return this.form.hasOwnProperty(key) ? <Tag id={props[key].$id} for={key} value={JSON.stringify(this.form[key])} title={title}/> : null;
   };
 
   render() {
+
+    console.log("this.form");
+    console.log(this.form);
+
+    console.log("this.allValues");
+    console.log(this.allValues);
+
     /**
      * Creating form fields and saving it to the let form
      */
@@ -190,7 +211,7 @@ export class MyDynamicForm {
         <div>
           <span>{this.invalidMessage}</span>
         </div>;
-    }
+    };
 
     return (
       <div>
