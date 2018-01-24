@@ -23,7 +23,7 @@ export class NumberInput {
     if(event.currentTarget.value) {
       this.currentValue = JSON.parse(event.currentTarget.value);
     } else {
-      this.currentValue = 0;
+      this.currentValue = null;
     }
     console.log(this.currentValue);
     console.log(typeof(this.currentValue));
@@ -31,6 +31,7 @@ export class NumberInput {
   };
 
 	render() {
+
 		return (
 			<div id={this.id}>
         <label>

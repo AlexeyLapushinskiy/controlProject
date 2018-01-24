@@ -13,6 +13,7 @@ export class MyTextInput {
   @Element()
   element: HTMLElement;
 
+  @Prop() id: string;
 	@Prop() for: string;
 	@Prop() value: string;
 	@Prop() title: string;
@@ -30,7 +31,7 @@ export class MyTextInput {
 			<div  class="form-group">
         <label>
           {this.title}<br/>
-				  <input type="text" value={this.currentValue || (this.flagForChange ? "" : this.value)} onInput={() => this.getAndPostTextValue(event)} /><br/><br/>
+				  <input id={this.id} type="text" value={this.currentValue || (this.flagForChange ? "" : this.value)} onInput={() => this.getAndPostTextValue(event)} /><br/><br/>
         </label>
 			</div>
 		);

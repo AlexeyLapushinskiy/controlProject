@@ -12,13 +12,12 @@ export class MyDropdown {
   @Element()
   element: HTMLElement;
 
+  @Prop() id: string;
   @Prop() for: string;
   @Prop() value: string;
   @Prop() title: string;
 
   getSelectValues(event) {
-    console.log("event.currentTarget.value");
-    console.log(event.currentTarget.value);
     this.currentValue = event.currentTarget.value;
     this.postValue.emit(this.element);
   };
@@ -27,7 +26,7 @@ export class MyDropdown {
     const parsedValue = this.value ? JSON.parse(this.value): null;
 
     return (
-        <select value={this.currentValue} onClick={() => this.getSelectValues(event)}>
+        <select id={this.id} value={this.currentValue} onClick={() => this.getSelectValues(event)}>
           {parsedValue && parsedValue.map((value) =>
             <option>{value}</option>
           )}

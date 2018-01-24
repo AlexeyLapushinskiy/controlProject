@@ -5,6 +5,7 @@ import { Component, Prop } from '@stencil/core';
 	shadow: true
 })
 export class MyTextInputArray {
+	@Prop() id: string;
 	@Prop() for: string;
 	@Prop() value: string;
 	@Prop() title: string;
@@ -13,7 +14,7 @@ export class MyTextInputArray {
 		return (
 			<div>
         {this.title}<br/>
-        <my-dropdown value={this.value}></my-dropdown> <br/><br/>
+        <my-dropdown id={this.id} value={this.value}></my-dropdown> <br/><br/>
 			</div>
 		);
 	}

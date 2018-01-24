@@ -7,8 +7,10 @@ import * as ajv from 'ajv/dist/ajv.min.js';
 })
 export class MyDynamicForm {
   @State() allTitles: any = {};
-  @State() allValues: any = {};
+  @State() allIds: any = [];
+  @State() data: any = {};
   @State() invalidMessage: string = null;
+  @State() changeValueChecked: boolean = false;
 
   @Element() el: HTMLElement;
 
@@ -19,118 +21,87 @@ export class MyDynamicForm {
   @Prop() schema: any;
   @Prop() form: any;
 
-  // @Listen('validateForm')
-  // validateFormHandler() {
-  //   this.validateForm();
-  // };
+  @Listen('validateForm')
+  validateFormHandler() {
+    this.validateForm();
+  };
 
   @Listen('postValue')
   postValueHandler(CustomEvent) {
     console.log(CustomEvent);
+    this.changeValueChecked = true;
     let value: any = CustomEvent.detail._values.currentValue;
-    let id: any = CustomEvent.detail._values.id;
-    this.allValues[id] = value;
-    console.log(this.allValues);
+    let id: any = CustomEvent.detail._values.id.match(/\w+$/)[0];
+    // this.checkOnRepeat(this.allIds, id);
+    let ob: any = this.data;
+    this.fillData(id, value, ob);
+    console.log(this.form);
+    console.log(this.data);
   };
-
 
   mapping: Object = {}; // properties of the JSON schema
   validate;
 
   /**
+   * Functions for filling data object
+   */
+  fillData(id, value, ob) {
+    console.log("fillData");
+    Object.keys(ob).map((key) => {
+      if(key === id) {
+        if(Array.isArray(ob[key])) {
+          ob[key] = [];
+          ob[key][0] = value;
+        } else {
+          ob[key] = value;
+        }
+        return;
+      }
+      if ((typeof(ob[key]) === "object") && (!Array.isArray(ob[key])) && (ob[key]) !== null) {
+        this.fillData(id, value, ob[key]);
+      }
+    })
+  };
+
+  /**
    * Call functions for validate of all form fields
    */
+
   validateForm() {
     this.validate = ajv.compile(this.schema);
 
-    let formData = {
-      "checked": this.getCheckboxValue(),
-      "duration": this.getDurationValue(),
-      "startDate": this.getStartDateValue(),
-      "endDate": this.getEndDateValue(),
-      "sources": this.getSourcesValue()
-    };
-
-    if (this.validate(formData)) {
-      this.invalidMessage = null;
+    if(this.changeValueChecked === false) {
+      this.validate(this.form);
     } else {
-      this.invalidMessage = this.updateValidationMessage();
-    }
-  };
-
-  getCheckboxValue() {
-    let myCheckbox: any = this.el.shadowRoot.querySelector('my-checkbox');
-    let checkbox: any = myCheckbox.shadowRoot.getElementById('check-schema');
-
-    return checkbox.getAttribute("checked") === "true";
-  };
-
-  getStartDateValue() {
-    let myDates: any = this.el.shadowRoot.querySelectorAll('my-text-input');
-    let startDateValue: string = null;
-
-    for (let el of myDates) {
-      let shadowEl: any = el.shadowRoot.querySelector('label');
-      let elText: string = shadowEl.innerText;
-      let elValue: string = el.shadowRoot.querySelector('input').value;
-
-      if (elText.trim() === "The Startdate Schema") {
-        startDateValue = elValue;
+      if(this.validate(this.data)) {
+        this.invalidMessage = null;
+      } else {
+        this.invalidMessage = this.updateValidationMessage();
       }
     }
-
-    return startDateValue;
   };
 
-  getEndDateValue() {
-    let myDates: any = this.el.shadowRoot.querySelectorAll('my-text-input');
-    let endDateValue: string = null;
-
-    for (let el of myDates) {
-      let shadowEl: any = el.shadowRoot.querySelector('label');
-      let elText: string = shadowEl.innerText;
-      let elValue: string = el.shadowRoot.querySelector('input').value;
-
-      if (elText.trim() === "The Enddate Schema") {
-        endDateValue = elValue;
+  makeClone(obj) {
+  let clone = {};
+  for (let prop in obj) {
+    if (obj.hasOwnProperty(prop)) {
+      if ("object"===typeof (obj[prop])){
+        if(Array.isArray(obj[prop])) {
+          clone[prop] = obj[prop];
+        } else {
+          clone[prop] = this.makeClone(obj[prop]);
+        }
+      }
+      else {
+        clone[prop] = obj[prop];
       }
     }
-
-    return endDateValue;
-  };
-
-  getDurationValue() {
-    let myNumberInput: any = this.el.shadowRoot.querySelectorAll('my-number-input');
-    let durationValue: any = {};
-    let el: HTMLElement = null;
-
-    for (el of myNumberInput) {
-      let labelText: string = el.shadowRoot.querySelector('label').innerText;
-      let inputValue: string = el.shadowRoot.querySelector('input').value;
-
-      labelText.trim() === "The Min Schema" ? durationValue.min = parseInt(inputValue) : durationValue.max = parseInt(inputValue);
-    }
-
-    return durationValue;
-  };
-
-  getSourcesValue() {
-    let myTextInputArray: any = this.el.shadowRoot.querySelector('my-text-input-array');
-    let dropdown: any = myTextInputArray.shadowRoot.querySelector('my-dropdown');
-    let select: any = dropdown.shadowRoot.querySelector('select');
-    let options: any = select.querySelectorAll('option');
-    let sourcesValue: any = [];
-    let el: HTMLElement = null;
-
-    for (el of options) {
-      let optionText: string = el.innerText;
-      sourcesValue.push(optionText);
-    }
-
-    return sourcesValue;
-  };
+  }
+  return clone;
+}
 
   updateValidationMessage() {
+    console.log("updateValidationMessage");
     let unchangedMessage: any = ajv.errorsText(this.validate.errors).replace(/\,?\w*\.\w*\./g, "").split(" ");
     Object.keys(this.allTitles).map((title: string) => {
       for (let el in unchangedMessage) {
@@ -139,7 +110,6 @@ export class MyDynamicForm {
         }
       }
     });
-
     return unchangedMessage.toString().replace(/\,(?!\,)/g, " ");
   };
 
@@ -152,8 +122,6 @@ export class MyDynamicForm {
     let title = propsKeyProps[keyProp].title;
     let id: string = propsKeyProps[keyProp].$id;
     this.allTitles[keyProp] = title;
-
-    this.fillDataByDefault(id);
 
     return this.form[key].hasOwnProperty(keyProp) ?
       <Tag id={propsKeyProps[keyProp].$id} for={keyProp} value={JSON.stringify(this.form[key][keyProp])} title={title}/> : null;
@@ -174,32 +142,10 @@ export class MyDynamicForm {
       this.allTitles[key] = title;
     }
 
-    this.fillDataByDefault(id);
-
     if (key === "button") {
       return this.form.hasOwnProperty(key) ? <Tag id={props[key].$id} for={key} value={JSON.stringify(this.form[key])} title={title} allTitles={this.allTitles}/> : null;
     }
     return this.form.hasOwnProperty(key) ? <Tag id={props[key].$id} for={key} value={JSON.stringify(this.form[key])} title={title}/> : null;
-  };
-
-  /**
-   * Function for filling data object by default (after rendering)
-   */
-
-  fillDataByDefault(id) {
-    let lastPartOfId: any = /\w+$/.exec(id)[0];
-    Object.keys(this.form).map((formProp) => {
-      if(Object.keys(this.form[formProp]).length !== 0) {
-        Object.keys(this.form[formProp]).map((innerFormProp) => {
-          if (innerFormProp === lastPartOfId) {
-            Array.isArray(this.form[formProp][innerFormProp]) ? this.allValues[id] = this.form[formProp][innerFormProp][0] : this.allValues[id] = this.form[formProp][innerFormProp];
-          }
-        })
-      }
-      if (formProp === lastPartOfId) {
-        Array.isArray(this.form[formProp]) ? this.allValues[id] = this.form[formProp][0] : this.allValues[id] = this.form[formProp];
-      }
-    });
   };
 
   render() {
@@ -239,6 +185,10 @@ export class MyDynamicForm {
   }
 
   componentWillLoad() {
+    /**
+     * Create object for saving form data
+     */
+    this.data = this.makeClone(this.form);
     for (let i = 0; i < this.el.children.length; i++) {
       let child = this.el.children[i];
       let mapKey = child['for'];
