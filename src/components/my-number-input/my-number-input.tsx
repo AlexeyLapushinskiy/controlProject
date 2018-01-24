@@ -25,8 +25,6 @@ export class NumberInput {
     } else {
       this.currentValue = null;
     }
-    console.log(this.currentValue);
-    console.log(typeof(this.currentValue));
     this.postValue.emit(this.element);
   };
 

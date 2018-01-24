@@ -28,15 +28,12 @@ export class MyDynamicForm {
 
   @Listen('postValue')
   postValueHandler(CustomEvent) {
-    console.log(CustomEvent);
     this.changeValueChecked = true;
     let value: any = CustomEvent.detail._values.currentValue;
     let id: any = CustomEvent.detail._values.id.match(/\w+$/)[0];
     // this.checkOnRepeat(this.allIds, id);
     let ob: any = this.data;
     this.fillData(id, value, ob);
-    console.log(this.form);
-    console.log(this.data);
   };
 
   mapping: Object = {}; // properties of the JSON schema
@@ -46,7 +43,6 @@ export class MyDynamicForm {
    * Functions for filling data object
    */
   fillData(id, value, ob) {
-    console.log("fillData");
     Object.keys(ob).map((key) => {
       if(key === id) {
         if(Array.isArray(ob[key])) {
@@ -101,7 +97,6 @@ export class MyDynamicForm {
 }
 
   updateValidationMessage() {
-    console.log("updateValidationMessage");
     let unchangedMessage: any = ajv.errorsText(this.validate.errors).replace(/\,?\w*\.\w*\./g, "").split(" ");
     Object.keys(this.allTitles).map((title: string) => {
       for (let el in unchangedMessage) {
