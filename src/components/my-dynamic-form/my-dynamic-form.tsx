@@ -150,8 +150,11 @@ export class MyDynamicForm {
     let {type} = propsKeyProps[keyProp];
     let Tag = this.mapping[type];
     let title = propsKeyProps[keyProp].title;
+    let id: string = propsKeyProps[keyProp].$id;
     this.allTitles[keyProp] = title;
-    // this.allValues[propsKeyProps[keyProp].$id] = '';
+
+    this.fillDataByDefault(id);
+
     return this.form[key].hasOwnProperty(keyProp) ?
       <Tag id={propsKeyProps[keyProp].$id} for={keyProp} value={JSON.stringify(this.form[key][keyProp])} title={title}/> : null;
   };
@@ -163,6 +166,7 @@ export class MyDynamicForm {
     let {type} = props[key];
     let Tag = this.mapping[type];
     let title: string = props[key].title;
+    let id: string = props[key].$id;
     this.allTitles[key] = title;
 
     if (!title) {
@@ -170,10 +174,7 @@ export class MyDynamicForm {
       this.allTitles[key] = title;
     }
 
-    // Object.keys(this.form).map((formProp) => {
-    //
-    //   formProp === props[key].$id ? this.allValues[props[key].$id] = this.form[formProp];
-    // });
+    this.fillDataByDefault(id);
 
     if (key === "button") {
       return this.form.hasOwnProperty(key) ? <Tag id={props[key].$id} for={key} value={JSON.stringify(this.form[key])} title={title} allTitles={this.allTitles}/> : null;
@@ -181,17 +182,32 @@ export class MyDynamicForm {
     return this.form.hasOwnProperty(key) ? <Tag id={props[key].$id} for={key} value={JSON.stringify(this.form[key])} title={title}/> : null;
   };
 
+  /**
+   * Function for filling data object by default (after rendering)
+   */
+
+  fillDataByDefault(id) {
+    let lastPartOfId: any = /\w+$/.exec(id)[0];
+    Object.keys(this.form).map((formProp) => {
+      if(Object.keys(this.form[formProp]).length !== 0) {
+        Object.keys(this.form[formProp]).map((innerFormProp) => {
+          if (innerFormProp === lastPartOfId) {
+            Array.isArray(this.form[formProp][innerFormProp]) ? this.allValues[id] = this.form[formProp][innerFormProp][0] : this.allValues[id] = this.form[formProp][innerFormProp];
+          }
+        })
+      }
+      if (formProp === lastPartOfId) {
+        Array.isArray(this.form[formProp]) ? this.allValues[id] = this.form[formProp][0] : this.allValues[id] = this.form[formProp];
+      }
+    });
+  };
+
   render() {
-
-    console.log("this.form");
-    console.log(this.form);
-
-    console.log("this.allValues");
-    console.log(this.allValues);
 
     /**
      * Creating form fields and saving it to the let form
      */
+
     let message: any = null;
 
     let form: any = Object.keys(this.schema.properties).map((key: any) => {
