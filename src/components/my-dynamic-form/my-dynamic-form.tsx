@@ -28,6 +28,7 @@ export class MyDynamicForm {
 
   @Listen('postValue')
   postValueHandler(CustomEvent) {
+    console.log(CustomEvent);
     this.changeValueChecked = true;
     let value: any = CustomEvent.detail._values.currentValue;
     let id: any = CustomEvent.detail._values.id.match(/\w+$/)[0];
@@ -57,6 +58,7 @@ export class MyDynamicForm {
         this.fillData(id, value, ob[key]);
       }
     })
+    console.log(this.data);
   };
 
   /**
@@ -77,27 +79,9 @@ export class MyDynamicForm {
     }
   };
 
-  makeClone(obj) {
-  let clone = {};
-  for (let prop in obj) {
-    if (obj.hasOwnProperty(prop)) {
-      if ("object"===typeof (obj[prop])){
-        if(Array.isArray(obj[prop])) {
-          clone[prop] = obj[prop];
-        } else {
-          clone[prop] = this.makeClone(obj[prop]);
-        }
-      }
-      else {
-        clone[prop] = obj[prop];
-      }
-    }
-  }
-  return clone;
-}
-
   updateValidationMessage() {
-    let unchangedMessage: any = ajv.errorsText(this.validate.errors).replace(/\,?\w*\.\w*\./g, "").split(" ");
+    let unchangedMessage: any = ajv.errorsText(this.validate.errors).replace(/\,?\w*\.?\w*\./g, "").split(" ");
+    console.log(unchangedMessage);
     Object.keys(this.allTitles).map((title: string) => {
       for (let el in unchangedMessage) {
         if (unchangedMessage[el] === title) {
@@ -183,7 +167,7 @@ export class MyDynamicForm {
     /**
      * Create object for saving form data
      */
-    this.data = this.makeClone(this.form);
+    this.data = Object.assign({}, this.form);
     for (let i = 0; i < this.el.children.length; i++) {
       let child = this.el.children[i];
       let mapKey = child['for'];

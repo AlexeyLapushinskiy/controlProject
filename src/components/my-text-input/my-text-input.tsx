@@ -20,8 +20,12 @@ export class MyTextInput {
 
   getAndPostTextValue (event) {
     this.flagForChange = true;
-    this.currentValue = event.currentTarget.value;
-    this.postValue.emit(this.element)
+    if(event.currentTarget.value) {
+      this.currentValue = event.currentTarget.value;
+    } else {
+      this.currentValue = null;
+    }
+    this.postValue.emit(this.element);
   };
 
 	render() {
@@ -31,7 +35,7 @@ export class MyTextInput {
 			<div  class="form-group">
         <label>
           {this.title}<br/>
-				  <input id={this.id} type="text" value={this.currentValue || (this.flagForChange ? "" : this.value)} onInput={() => this.getAndPostTextValue(event)} /><br/><br/>
+				  <input id={this.id} type="text" value={this.currentValue || parsedValue} onInput={() => this.getAndPostTextValue(event)} /><br/><br/>
         </label>
 			</div>
 		);

@@ -34,7 +34,7 @@ export class NumberInput {
 			<div id={this.id}>
         <label>
           {this.title}<br/>
-          <input id={this.id} value={this.currentValue || (this.flagForChange ? "" : this.value)} type="number" onInput={() => this.getAndPostNumberValue(event)} onClick={() => this.getAndPostNumberValue(event)} /><br/><br/>
+          <input id={this.id} value={this.currentValue || this.value} type="number" onInput={() => this.getAndPostNumberValue(event)} /><br/><br/>
         </label>
 			</div>
 		);

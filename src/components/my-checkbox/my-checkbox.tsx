@@ -33,7 +33,7 @@ export class MyCheckbox {
 			<div  class="checkbox">
 				<label>
           {this.title}<br/>
-					<input id={this.id} value={`${this.currentValue}` || `${this.value}`} type="checkbox" onClick={() => {this.checkWatcher()}} /><br/><br/>
+					<input id={this.id} value={`${this.currentValue}` || `${parsedValue}`} type="checkbox" onClick={() => {this.checkWatcher()}} /><br/><br/>
 				</label>
 			</div>
 		);
