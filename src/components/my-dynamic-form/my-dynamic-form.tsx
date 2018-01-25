@@ -93,7 +93,7 @@ export class MyDynamicForm {
    * Getting fields based on properties in JSON-schema
    */
 
-  createField(props, key) {
+  createField(props: any, key: any, propKey: any) {
     let {type} = props[key];
     let Tag = this.mapping[type];
     let title: string = props[key].title;
@@ -108,15 +108,16 @@ export class MyDynamicForm {
     if (key === "button") {
       return <Tag id={props[key].$id} for={key} value={JSON.stringify(this.form[key])} title={title} allTitles={this.allTitles}/> || null;
     }
-    return <Tag id={props[key].$id} for={key} value={JSON.stringify(this.form[key]) || this.form[key]} title={title}/> || null;
+    return <Tag id={props[key].$id} for={key} value={this.form[key] ? JSON.stringify(this.form[key]) : this.form[propKey][key]} title={title}/> || null;
   };
 
-  createForm(props) {
+  createForm(props, propKey) {
     return Object.keys(props).map((key: any) => {
       if (props[key].hasOwnProperty("properties")) {
-        return this.createForm(props[key].properties);
+        propKey = key;
+        return this.createForm(props[key].properties, propKey);
       } else {
-        return this.createField(props, key);
+        return this.createField(props, key, propKey);
       }
     })
   };
@@ -130,7 +131,7 @@ export class MyDynamicForm {
     let message: any = null;
     let schemaProps: any = this.schema.properties;
 
-    let form: any = this.createForm(schemaProps);
+    let form: any = this.createForm(schemaProps, null);
 
     if (this.invalidMessage) {
       message =
