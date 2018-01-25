@@ -168,6 +168,7 @@ export class MyDynamicForm {
      * Create object for saving form data
      */
     this.data = Object.assign({}, this.form);
+
     for (let i = 0; i < this.el.children.length; i++) {
       let child = this.el.children[i];
       let mapKey = child['for'];

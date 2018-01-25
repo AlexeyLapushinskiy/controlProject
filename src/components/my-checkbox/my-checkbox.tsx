@@ -30,7 +30,7 @@ export class MyCheckbox {
 	  const parsedValue = this.value ? this.value : false;
 
 		return (
-			<div  class="checkbox">
+			<div>
 				<label>
           {this.title}<br/>
 					<input id={this.id} value={`${this.currentValue}` || `${parsedValue}`} type="checkbox" onClick={() => {this.checkWatcher()}} /><br/><br/>

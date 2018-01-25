@@ -6,66 +6,62 @@
 
 
 import {
-  NumberInput as MyNumberInput
-} from './components/my-number-input/my-number-input';
+  MyButton as MyButton
+} from './components/my-button/my-button';
 
 declare global {
-  interface HTMLMyNumberInputElement extends MyNumberInput, HTMLElement {
+  interface HTMLMyButtonElement extends MyButton, HTMLElement {
   }
-  var HTMLMyNumberInputElement: {
-    prototype: HTMLMyNumberInputElement;
-    new (): HTMLMyNumberInputElement;
+  var HTMLMyButtonElement: {
+    prototype: HTMLMyButtonElement;
+    new (): HTMLMyButtonElement;
   };
   interface HTMLElementTagNameMap {
-    "my-number-input": HTMLMyNumberInputElement;
+    "my-button": HTMLMyButtonElement;
   }
   interface ElementTagNameMap {
-    "my-number-input": HTMLMyNumberInputElement;
+    "my-button": HTMLMyButtonElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "my-number-input": JSXElements.MyNumberInputAttributes;
+      "my-button": JSXElements.MyButtonAttributes;
     }
   }
   namespace JSXElements {
-    export interface MyNumberInputAttributes extends HTMLAttributes {
+    export interface MyButtonAttributes extends HTMLAttributes {
+      allTitles?: any;
       for?: string;
-      id?: string;
-      title?: string;
-      value?: number;
     }
   }
 }
 
 
 import {
-  MyTextInput as MyTextInput
-} from './components/my-text-input/my-text-input';
+  MyDynamicForm as MyDynamicForm
+} from './components/my-dynamic-form/my-dynamic-form';
 
 declare global {
-  interface HTMLMyTextInputElement extends MyTextInput, HTMLElement {
+  interface HTMLMyDynamicFormElement extends MyDynamicForm, HTMLElement {
   }
-  var HTMLMyTextInputElement: {
-    prototype: HTMLMyTextInputElement;
-    new (): HTMLMyTextInputElement;
+  var HTMLMyDynamicFormElement: {
+    prototype: HTMLMyDynamicFormElement;
+    new (): HTMLMyDynamicFormElement;
   };
   interface HTMLElementTagNameMap {
-    "my-text-input": HTMLMyTextInputElement;
+    "my-dynamic-form": HTMLMyDynamicFormElement;
   }
   interface ElementTagNameMap {
-    "my-text-input": HTMLMyTextInputElement;
+    "my-dynamic-form": HTMLMyDynamicFormElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "my-text-input": JSXElements.MyTextInputAttributes;
+      "my-dynamic-form": JSXElements.MyDynamicFormAttributes;
     }
   }
   namespace JSXElements {
-    export interface MyTextInputAttributes extends HTMLAttributes {
-      for?: string;
-      id?: string;
-      title?: string;
-      value?: string;
+    export interface MyDynamicFormAttributes extends HTMLAttributes {
+      form?: any;
+      schema?: any;
     }
   }
 }

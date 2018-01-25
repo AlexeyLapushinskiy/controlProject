@@ -15,7 +15,7 @@ export class MyButton {
 	render() {
 		return (
 		  <div>
-        <input class="btn btn-lg btn-primary" type="submit" value="Validate" onClick={() => this.validateForm.emit()} />
+        <input type="submit" value="Validate" onClick={() => this.validateForm.emit()} />
       </div>
 		);
 	}

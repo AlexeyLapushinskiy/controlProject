@@ -7,7 +7,6 @@ import { Component, Prop, Event, EventEmitter, Element, State } from '@stencil/c
 export class NumberInput {
 
   @State() currentValue: number;
-  @State() flagForChange: boolean = false;
 
   @Event() postValue: EventEmitter;
   @Element()
@@ -19,7 +18,6 @@ export class NumberInput {
   @Prop() title: string;
 
   getAndPostNumberValue (event) {
-    this.flagForChange = true;
     if(event.currentTarget.value) {
       this.currentValue = JSON.parse(event.currentTarget.value);
     } else {
@@ -28,13 +26,17 @@ export class NumberInput {
     this.postValue.emit(this.element);
   };
 
+  componentWillLoad() {
+    this.currentValue = this.value;
+  };
+
 	render() {
 
 		return (
-			<div id={this.id}>
+			<div>
         <label>
           {this.title}<br/>
-          <input id={this.id} value={this.currentValue || this.value} type="number" onInput={() => this.getAndPostNumberValue(event)} /><br/><br/>
+          <input id={this.id} value={this.currentValue} type="number" onInput={() => this.getAndPostNumberValue(event)} /><br/><br/>
         </label>
 			</div>
 		);

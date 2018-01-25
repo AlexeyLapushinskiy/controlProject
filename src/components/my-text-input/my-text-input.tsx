@@ -7,7 +7,6 @@ import { Component, Prop, State, Event, EventEmitter, Element, Listen } from '@s
 export class MyTextInput {
 
   @State() currentValue: string;
-  @State() flagForChange: boolean = false;
 
   @Event() postValue: EventEmitter;
   @Element()
@@ -19,7 +18,6 @@ export class MyTextInput {
 	@Prop() title: string;
 
   getAndPostTextValue (event) {
-    this.flagForChange = true;
     if(event.currentTarget.value) {
       this.currentValue = event.currentTarget.value;
     } else {
@@ -28,14 +26,17 @@ export class MyTextInput {
     this.postValue.emit(this.element);
   };
 
+  componentWillLoad() {
+    this.currentValue = this.value ? JSON.parse(this.value): '';
+  };
+
 	render() {
-    const parsedValue = this.value ? JSON.parse(this.value): '';
 
     return (
-			<div  class="form-group">
+			<div>
         <label>
           {this.title}<br/>
-				  <input id={this.id} type="text" value={this.currentValue || parsedValue} onInput={() => this.getAndPostTextValue(event)} /><br/><br/>
+				  <input id={this.id} type="text" value={this.currentValue} onInput={() => this.getAndPostTextValue(event)} /><br/><br/>
         </label>
 			</div>
 		);
