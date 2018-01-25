@@ -6,37 +6,6 @@
 
 
 import {
-  MyButton as MyButton
-} from './components/my-button/my-button';
-
-declare global {
-  interface HTMLMyButtonElement extends MyButton, HTMLElement {
-  }
-  var HTMLMyButtonElement: {
-    prototype: HTMLMyButtonElement;
-    new (): HTMLMyButtonElement;
-  };
-  interface HTMLElementTagNameMap {
-    "my-button": HTMLMyButtonElement;
-  }
-  interface ElementTagNameMap {
-    "my-button": HTMLMyButtonElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "my-button": JSXElements.MyButtonAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface MyButtonAttributes extends HTMLAttributes {
-      allTitles?: any;
-      for?: string;
-    }
-  }
-}
-
-
-import {
   MyDynamicForm as MyDynamicForm
 } from './components/my-dynamic-form/my-dynamic-form';
 

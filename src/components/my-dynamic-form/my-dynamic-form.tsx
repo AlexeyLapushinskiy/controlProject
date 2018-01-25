@@ -28,7 +28,6 @@ export class MyDynamicForm {
 
   @Listen('postValue')
   postValueHandler(CustomEvent) {
-    console.log(CustomEvent);
     this.changeValueChecked = true;
     let value: any = CustomEvent.detail._values.currentValue;
     let id: any = CustomEvent.detail._values.id.match(/\w+$/)[0];
@@ -58,7 +57,6 @@ export class MyDynamicForm {
         this.fillData(id, value, ob[key]);
       }
     })
-    console.log(this.data);
   };
 
   /**
@@ -81,7 +79,6 @@ export class MyDynamicForm {
 
   updateValidationMessage() {
     let unchangedMessage: any = ajv.errorsText(this.validate.errors).replace(/\,?\w*\.?\w*\./g, "").split(" ");
-    console.log(unchangedMessage);
     Object.keys(this.allTitles).map((title: string) => {
       for (let el in unchangedMessage) {
         if (unchangedMessage[el] === title) {
@@ -93,23 +90,10 @@ export class MyDynamicForm {
   };
 
   /**
-   * Getting fields based on properties of properties in JSON schema
-   */
-  getFirstProps(propsKeyProps, key, keyProp) {
-    let {type} = propsKeyProps[keyProp];
-    let Tag = this.mapping[type];
-    let title = propsKeyProps[keyProp].title;
-    let id: string = propsKeyProps[keyProp].$id;
-    this.allTitles[keyProp] = title;
-
-    return this.form[key].hasOwnProperty(keyProp) ?
-      <Tag id={propsKeyProps[keyProp].$id} for={keyProp} value={JSON.stringify(this.form[key][keyProp])} title={title}/> : null;
-  };
-
-  /**
    * Getting fields based on properties in JSON-schema
    */
-  getSecondProps(props, key) {
+
+  createField(props, key) {
     let {type} = props[key];
     let Tag = this.mapping[type];
     let title: string = props[key].title;
@@ -122,9 +106,19 @@ export class MyDynamicForm {
     }
 
     if (key === "button") {
-      return this.form.hasOwnProperty(key) ? <Tag id={props[key].$id} for={key} value={JSON.stringify(this.form[key])} title={title} allTitles={this.allTitles}/> : null;
+      return <Tag id={props[key].$id} for={key} value={JSON.stringify(this.form[key])} title={title} allTitles={this.allTitles}/> || null;
     }
-    return this.form.hasOwnProperty(key) ? <Tag id={props[key].$id} for={key} value={JSON.stringify(this.form[key])} title={title}/> : null;
+    return <Tag id={props[key].$id} for={key} value={JSON.stringify(this.form[key]) || this.form[key]} title={title}/> || null;
+  };
+
+  createForm(props) {
+    return Object.keys(props).map((key: any) => {
+      if (props[key].hasOwnProperty("properties")) {
+        return this.createForm(props[key].properties);
+      } else {
+        return this.createField(props, key);
+      }
+    })
   };
 
   render() {
@@ -134,39 +128,31 @@ export class MyDynamicForm {
      */
 
     let message: any = null;
+    let schemaProps: any = this.schema.properties;
 
-    let form: any = Object.keys(this.schema.properties).map((key: any) => {
-      let props: any = this.schema.properties;
-      if (props[key].properties) {
-        return Object.keys(props[key].properties).map((keyProp: any) => {
-          let propsKeyProps: any = props[key].properties;
-          return this.getFirstProps(propsKeyProps, key, keyProp);
-        })
-      } else {
-        return this.getSecondProps(props, key);
-      }
-    });
+    let form: any = this.createForm(schemaProps);
 
     if (this.invalidMessage) {
       message =
         <div>
           <span>{this.invalidMessage}</span>
         </div>;
-    };
+    }
 
     return (
       <div>
         {form}
-
         {message} <br/>
       </div>
     );
   }
 
   componentWillLoad() {
+
     /**
      * Create object for saving form data
      */
+
     this.data = Object.assign({}, this.form);
 
     for (let i = 0; i < this.el.children.length; i++) {
