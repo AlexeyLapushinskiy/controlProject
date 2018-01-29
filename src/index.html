@@ -18,22 +18,22 @@
     <my-text-input for="string"></my-text-input>
     <my-dropdown for="array"></my-dropdown>
     <my-checkbox id="my-boolean-array" for="boolean"></my-checkbox>
-    <my-button for="submit"></my-button>
   </my-dynamic-form>
 
 
   <script>
 
      let ajv = new Ajv({allErrors: true});
+//     let ajv = new Ajv({ allErrors: true, loopRequired: Infinity });
+//     let ajv = new Ajv({ loopRequired: Infinity });
+//     let ajv = new Ajv({ verbose: true });
 
      const schema = {
-       "definitions": {},
-       "$id": "http://json-schema.org/draft-06/schema#",
-       "$schema": "http://json-schema.org/draft-06/schema#",
        "type": "object",
+       "required": [ "endDate" ],
        "properties": {
          "checked": {
-           "$id": "/properties/checked",
+           "$id": "data/properties/checked",
            "type": "boolean",
            "title": "The Checked Schema",
            "description": "An explanation about the purpose of this instance.",
@@ -43,11 +43,11 @@
            ]
          },
          "duration": {
-           "$id": "/properties/duration",
+           "$id": "data/properties/duration",
            "type": "object",
            "properties": {
              "min": {
-               "$id": "/properties/duration/properties/min",
+               "$id": "data/properties/duration/properties/min",
                "type": "integer",
                "title": "The Min Schema",
                "description": "An explanation about the purpose of this instance.",
@@ -57,7 +57,7 @@
                ]
              },
              "max": {
-               "$id": "/properties/duration/properties/max",
+               "$id": "data/properties/duration/properties/max",
                "type": "integer",
                "title": "The Max Schema",
                "description": "An explanation about the purpose of this instance.",
@@ -69,7 +69,7 @@
            }
          },
          "startDate": {
-           "$id": "/properties/startDate",
+           "$id": "data/properties/startDate",
            "type": "string",
            "title": "The Startdate Schema",
            "description": "An explanation about the purpose of this instance.",
@@ -79,7 +79,7 @@
            ]
          },
          "endDate": {
-           "$id": "/properties/endDate",
+           "$id": "data/properties/endDate",
            "type": "string",
            "title": "The Enddate Schema",
            "description": "An explanation about the purpose of this instance.",
@@ -89,7 +89,7 @@
            ]
          },
          "sources": {
-           "$id": "/properties/sources",
+           "$id": "data/properties/sources",
            "type": "array",
            "items": {
              "$id": "/properties/sources/items",
@@ -101,13 +101,29 @@
                "source1"
              ]
            }
-         },
-         "button": {
-           "$id": "/properties/button",
-           "type": "submit"
          }
        }
      };
+
+//     const schema = {
+//       "type" : "object",
+//       "properties" : {
+//         "phone": {
+//           "$id": "/properties/phone",
+//           "type": "string"
+//         },
+//         "email": {
+//           "$id": "/properties/email",
+//           "type": "string"
+//         }
+//       },
+//       "required": [ "phone", "email" ]
+//     };
+
+//     const form = {
+//       "phone": "1234567",
+//       "email": "adadqedwexwede"
+//     };
 
      const form = {
        "checked": true,
@@ -120,9 +136,7 @@
        "sources": [
          "source1",
          "source2"
-       ],
-       "button": true,
-       "required": ["endDate"]
+       ]
      };
 
     const dynamicForm = document.querySelector('my-dynamic-form');

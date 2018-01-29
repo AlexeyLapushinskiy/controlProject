@@ -1,4 +1,4 @@
-import {Element, Component, Prop, State, Listen} from '@stencil/core';
+import { Element, Component, Prop, State, Listen, Event, EventEmitter } from '@stencil/core';
 import * as ajv from 'ajv/dist/ajv.min.js';
 
 @Component({
@@ -6,9 +6,14 @@ import * as ajv from 'ajv/dist/ajv.min.js';
   shadow: true
 })
 export class MyDynamicForm {
+
+  // @Event() validateData: EventEmitter;
+
   @State() allTitles: any = {};
   @State() allIds: any = [];
-  @State() data: any = {};
+  @State() data: any;
+  @State() filledData: any;
+  @State() changedData: any;
   @State() invalidMessage: string = null;
   @State() changeValueChecked: boolean = false;
 
@@ -21,19 +26,14 @@ export class MyDynamicForm {
   @Prop() schema: any;
   @Prop() form: any;
 
-  @Listen('validateForm')
-  validateFormHandler() {
-    this.validateForm();
-  };
-
   @Listen('postValue')
   postValueHandler(CustomEvent) {
     this.changeValueChecked = true;
     let value: any = CustomEvent.detail._values.currentValue;
     let id: any = CustomEvent.detail._values.id.match(/\w+$/)[0];
-    // this.checkOnRepeat(this.allIds, id);
-    let ob: any = this.data;
-    this.fillData(id, value, ob);
+    let data: any = this.filledData || this.data;
+    this.fillData(id, value, data);
+
   };
 
   mapping: Object = {}; // properties of the JSON schema
@@ -51,12 +51,25 @@ export class MyDynamicForm {
         } else {
           ob[key] = value;
         }
-        return;
       }
       if ((typeof(ob[key]) === "object") && (!Array.isArray(ob[key])) && (ob[key]) !== null) {
         this.fillData(id, value, ob[key]);
       }
-    })
+    });
+    this.filledData = Object.assign({}, ob);
+    this.deletePropsWithoutData(ob);
+  };
+
+  deletePropsWithoutData(ob) {
+    Object.keys(ob).map((key) => {
+      if(ob[key] === null) {
+        delete ob[key];
+      }
+      if((typeof(ob[key]) === "object") && (!Array.isArray(ob[key]))) {
+        this.deletePropsWithoutData(ob[key]);
+      }
+    });
+    this.changedData = Object.assign({}, ob);
   };
 
   /**
@@ -65,11 +78,11 @@ export class MyDynamicForm {
 
   validateForm() {
     this.validate = ajv.compile(this.schema);
-
     if(this.changeValueChecked === false) {
       this.validate(this.form);
     } else {
-      if(this.validate(this.data)) {
+      this.validate(this.changedData);
+      if(this.validate(this.changedData)) {
         this.invalidMessage = null;
       } else {
         this.invalidMessage = this.updateValidationMessage();
@@ -142,17 +155,16 @@ export class MyDynamicForm {
 
     return (
       <div>
-        {form}
-        {message} <br/>
+        <div>
+          {form}
+          {message} <br/>
+        </div>
+        <input type="submit" value="Validate" onClick={() => this.validateForm()} />
       </div>
     );
   }
 
   componentWillLoad() {
-
-    /**
-     * Create object for saving form data
-     */
 
     this.data = Object.assign({}, this.form);
 

@@ -27,7 +27,7 @@ export class MyTextInput {
   };
 
   componentWillLoad() {
-    this.currentValue = this.value ? JSON.parse(this.value): '';
+    this.currentValue = this.value ? JSON.parse(this.value): "";
   };
 
 	render() {

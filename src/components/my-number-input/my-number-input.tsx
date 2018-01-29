@@ -27,7 +27,7 @@ export class NumberInput {
   };
 
   componentWillLoad() {
-    this.currentValue = this.value;
+    this.currentValue = this.value || null;
   };
 
 	render() {
