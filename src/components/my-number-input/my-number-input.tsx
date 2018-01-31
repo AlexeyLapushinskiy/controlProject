@@ -27,8 +27,6 @@ export class NumberInput {
   };
 
   componentWillLoad() {
-    // console.log("my-number-input");
-    // console.log(this.for);
     this.currentValue = this.value || null;
   };
 

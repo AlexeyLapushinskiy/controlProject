@@ -6,31 +6,33 @@
 
 
 import {
-  MyDynamicForm as MyDynamicForm
-} from './components/my-dynamic-form/my-dynamic-form';
+  NumberInput as MyNumberInput
+} from './components/my-number-input/my-number-input';
 
 declare global {
-  interface HTMLMyDynamicFormElement extends MyDynamicForm, HTMLElement {
+  interface HTMLMyNumberInputElement extends MyNumberInput, HTMLElement {
   }
-  var HTMLMyDynamicFormElement: {
-    prototype: HTMLMyDynamicFormElement;
-    new (): HTMLMyDynamicFormElement;
+  var HTMLMyNumberInputElement: {
+    prototype: HTMLMyNumberInputElement;
+    new (): HTMLMyNumberInputElement;
   };
   interface HTMLElementTagNameMap {
-    "my-dynamic-form": HTMLMyDynamicFormElement;
+    "my-number-input": HTMLMyNumberInputElement;
   }
   interface ElementTagNameMap {
-    "my-dynamic-form": HTMLMyDynamicFormElement;
+    "my-number-input": HTMLMyNumberInputElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "my-dynamic-form": JSXElements.MyDynamicFormAttributes;
+      "my-number-input": JSXElements.MyNumberInputAttributes;
     }
   }
   namespace JSXElements {
-    export interface MyDynamicFormAttributes extends HTMLAttributes {
-      form?: any;
-      schema?: any;
+    export interface MyNumberInputAttributes extends HTMLAttributes {
+      for?: string;
+      id?: string;
+      title?: string;
+      value?: number;
     }
   }
 }
