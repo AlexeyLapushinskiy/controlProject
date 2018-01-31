@@ -12,7 +12,6 @@ export class MyDynamicForm {
   @State() allTitles: any = {};
   @State() allIds: any = [];
   @State() data: any;
-  @State() filledData: any;
   @State() changedData: any;
   @State() invalidMessage: string = null;
   @State() changeValueChecked: boolean = false;
@@ -20,6 +19,7 @@ export class MyDynamicForm {
   @Element() el: HTMLElement;
 
   /**
+   * @desc Field data change callback
    * @Prop {any} schema - JSON-schema
    * @Prop {any} form - form for JSON-schema
    */
@@ -29,47 +29,50 @@ export class MyDynamicForm {
   @Listen('postValue')
   postValueHandler(CustomEvent) {
     this.changeValueChecked = true;
-    let value: any = CustomEvent.detail._values.currentValue;
-    let id: any = CustomEvent.detail._values.id.match(/\w+$/)[0];
-    let data: any = this.filledData || this.data;
-    this.fillData(id, value, data);
+    let fieldId: any = CustomEvent.detail._values.id.match(/\w+$/)[0];
+    let fieldValue: any = CustomEvent.detail._values.currentValue;
+    let currentFormData: any = this.data;
 
+    currentFormData = this.fillData(fieldId, fieldValue, currentFormData);
+    let clearedFormData = Object.assign({}, currentFormData);
+    this.changedData = this.deletePropsWithoutData(clearedFormData);
   };
 
   mapping: Object = {}; // properties of the JSON schema
-  validate;
+  // currentFormData: Object = {};
 
   /**
    * Functions for filling data object
    */
-  fillData(id, value, ob) {
-    Object.keys(ob).map((key) => {
-      if(key === id) {
-        if(Array.isArray(ob[key])) {
-          ob[key] = [];
-          ob[key][0] = value;
+  fillData(fieldId, fieldValue, currentFormData) {
+    Object.keys(currentFormData).map((key) => {
+      if(key === fieldId) {
+        if(Array.isArray(currentFormData[key])) {
+          currentFormData[key][0] = fieldValue;
         } else {
-          ob[key] = value;
+          currentFormData[key] = fieldValue;
         }
+        return currentFormData;
       }
-      if ((typeof(ob[key]) === "object") && (!Array.isArray(ob[key])) && (ob[key]) !== null) {
-        this.fillData(id, value, ob[key]);
+      if ((typeof(currentFormData[key]) === "object") && (!Array.isArray(currentFormData[key])) && (currentFormData[key]) !== null) {
+        currentFormData[key] = this.fillData(fieldId, fieldValue, currentFormData[key]);
       }
     });
-    this.filledData = Object.assign({}, ob);
-    this.deletePropsWithoutData(ob);
+    return currentFormData;
   };
 
-  deletePropsWithoutData(ob) {
-    Object.keys(ob).map((key) => {
-      if(ob[key] === null) {
-        delete ob[key];
+  deletePropsWithoutData(clearedFormData) {
+    Object.keys(clearedFormData).map((key) => {
+      if(clearedFormData[key] === null) {
+        delete clearedFormData[key];
+        return clearedFormData;
       }
-      if((typeof(ob[key]) === "object") && (!Array.isArray(ob[key]))) {
-        this.deletePropsWithoutData(ob[key]);
+      if((typeof(clearedFormData[key]) === "object") && (!Array.isArray(clearedFormData[key]))) {
+        clearedFormData[key] = this.deletePropsWithoutData(clearedFormData[key]);
       }
     });
-    this.changedData = Object.assign({}, ob);
+
+    return clearedFormData;
   };
 
   /**
@@ -77,21 +80,33 @@ export class MyDynamicForm {
    */
 
   validateForm() {
-    this.validate = ajv.compile(this.schema);
-    if(this.changeValueChecked === false) {
-      this.validate(this.form);
+    let validate = ajv.compile(this.schema);
+    if(!this.changeValueChecked) {
+      // ajv.validate is not working with nested objects, so we have to make a flat clean clone to validate it,
+      // otherwise we should not use nested objects as it is working correctly without them
+      validate(this.form);
     } else {
-      this.validate(this.changedData);
-      if(this.validate(this.changedData)) {
+      let dataValidate = validate(this.flatDataObject(this.changedData));
+      if(dataValidate) {
         this.invalidMessage = null;
       } else {
-        this.invalidMessage = this.updateValidationMessage();
+        this.invalidMessage = this.updateValidationMessage(validate);
       }
     }
   };
 
-  updateValidationMessage() {
-    let unchangedMessage: any = ajv.errorsText(this.validate.errors).replace(/\,?\w*\.?\w*\./g, "").split(" ");
+  flatDataObject(data) {
+    function flat(res, key, val, pre = '') {
+        let prefix: any = [pre, key].filter(v => v).join('.').match(/\w+$/);
+        return (typeof val === 'object' && (!Array.isArray(val)))
+          ? Object.keys(val).reduce((prev, curr) => flat(prev, curr, val[curr], prefix), res)
+          : Object.assign(res, { [prefix]: val});
+    }
+    return Object.keys(data).reduce((prev, curr) => flat(prev, curr, data[curr]), {});
+  }
+
+  updateValidationMessage(validate) {
+    let unchangedMessage: any = ajv.errorsText(validate.errors).replace(/\,?\w*\.?\w*\./g, "").split(" ");
     Object.keys(this.allTitles).map((title: string) => {
       for (let el in unchangedMessage) {
         if (unchangedMessage[el] === title) {
@@ -106,31 +121,31 @@ export class MyDynamicForm {
    * Getting fields based on properties in JSON-schema
    */
 
-  createField(props: any, key: any, propKey: any) {
-    let {type} = props[key];
+  createField(schemaProps: any, prop: any, schemaPropKey: any) {
+    let {type} = schemaProps[prop];
     let Tag = this.mapping[type];
-    let title: string = props[key].title;
-    let id: string = props[key].$id;
-    this.allTitles[key] = title;
+    let title: string = schemaProps[prop].title;
+    let id: string = schemaProps[prop].$id;
+    this.allTitles[prop] = title;
 
     if (!title) {
-      props[key].items ? title = props[key].items.title : title = 'Unnamed field';
-      this.allTitles[key] = title;
+      schemaProps[prop].items ? title = schemaProps[prop].items.title : title = 'Unnamed field';
+      this.allTitles[prop] = title;
     }
 
-    if (key === "button") {
-      return <Tag id={props[key].$id} for={key} value={JSON.stringify(this.form[key])} title={title} allTitles={this.allTitles}/> || null;
+    if (prop === "button") {
+      return <Tag id={schemaProps[prop].$id} for={prop} value={JSON.stringify(this.form[prop])} title={title} allTitles={this.allTitles}/> || null;
     }
-    return <Tag id={props[key].$id} for={key} value={this.form[key] ? JSON.stringify(this.form[key]) : this.form[propKey][key]} title={title}/> || null;
+    return <Tag id={schemaProps[prop].$id} for={prop} value={this.form[prop] ? JSON.stringify(this.form[prop]) : this.form[schemaPropKey][prop]} title={title}/> || null;
   };
 
-  createForm(props, propKey) {
-    return Object.keys(props).map((key: any) => {
-      if (props[key].hasOwnProperty("properties")) {
-        propKey = key;
-        return this.createForm(props[key].properties, propKey);
+  createForm(schemaProps, schemaPropKey) {
+    return Object.keys(schemaProps).map((prop: any) => {
+      if (schemaProps[prop].hasOwnProperty("properties")) {
+        schemaPropKey = prop;
+        return this.createForm(schemaProps[prop].properties, schemaPropKey);
       } else {
-        return this.createField(props, key, propKey);
+        return this.createField(schemaProps, prop, schemaPropKey);
       }
     })
   };

@@ -30,7 +30,7 @@
 
      const schema = {
        "type": "object",
-       "required": [ "endDate" ],
+       "required": [ "endDate", "min", "max" ],
        "properties": {
          "checked": {
            "$id": "data/properties/checked",
@@ -45,6 +45,7 @@
          "duration": {
            "$id": "data/properties/duration",
            "type": "object",
+           "required": [ "min", "max" ],
            "properties": {
              "min": {
                "$id": "data/properties/duration/properties/min",
@@ -104,26 +105,6 @@
          }
        }
      };
-
-//     const schema = {
-//       "type" : "object",
-//       "properties" : {
-//         "phone": {
-//           "$id": "/properties/phone",
-//           "type": "string"
-//         },
-//         "email": {
-//           "$id": "/properties/email",
-//           "type": "string"
-//         }
-//       },
-//       "required": [ "phone", "email" ]
-//     };
-
-//     const form = {
-//       "phone": "1234567",
-//       "email": "adadqedwexwede"
-//     };
 
      const form = {
        "checked": true,
