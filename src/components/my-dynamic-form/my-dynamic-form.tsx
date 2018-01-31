@@ -34,7 +34,9 @@ export class MyDynamicForm {
     let currentFormData: any = this.data;
 
     currentFormData = this.fillData(fieldId, fieldValue, currentFormData);
+    // debugger
     let clearedFormData = Object.assign({}, currentFormData);
+    // debugger
     this.changedData = this.deletePropsWithoutData(clearedFormData);
   };
 
