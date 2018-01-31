@@ -24,9 +24,6 @@
   <script>
 
      let ajv = new Ajv({allErrors: true});
-//     let ajv = new Ajv({ allErrors: true, loopRequired: Infinity });
-//     let ajv = new Ajv({ loopRequired: Infinity });
-//     let ajv = new Ajv({ verbose: true });
 
      const schema = {
        "type": "object",
@@ -45,7 +42,6 @@
          "duration": {
            "$id": "data/properties/duration",
            "type": "object",
-           "required": [ "min", "max" ],
            "properties": {
              "min": {
                "$id": "data/properties/duration/properties/min",

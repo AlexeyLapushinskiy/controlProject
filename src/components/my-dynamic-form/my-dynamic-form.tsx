@@ -13,6 +13,7 @@ export class MyDynamicForm {
   @State() allIds: any = [];
   @State() data: any;
   @State() changedData: any;
+  @State() filledData: any;
   @State() invalidMessage: string = null;
   @State() changeValueChecked: boolean = false;
 
@@ -29,19 +30,17 @@ export class MyDynamicForm {
   @Listen('postValue')
   postValueHandler(CustomEvent) {
     this.changeValueChecked = true;
+
     let fieldId: any = CustomEvent.detail._values.id.match(/\w+$/)[0];
     let fieldValue: any = CustomEvent.detail._values.currentValue;
-    let currentFormData: any = this.data;
+    const currentFormData: any = this.filledData || this.data;
 
-    currentFormData = this.fillData(fieldId, fieldValue, currentFormData);
-    // debugger
-    let clearedFormData = Object.assign({}, currentFormData);
-    // debugger
+    this.filledData = this.fillData(fieldId, fieldValue, currentFormData);
+    let clearedFormData = Object.assign({}, this.filledData);
     this.changedData = this.deletePropsWithoutData(clearedFormData);
   };
 
   mapping: Object = {}; // properties of the JSON schema
-  // currentFormData: Object = {};
 
   /**
    * Functions for filling data object
@@ -64,17 +63,18 @@ export class MyDynamicForm {
   };
 
   deletePropsWithoutData(clearedFormData) {
-    Object.keys(clearedFormData).map((key) => {
-      if(clearedFormData[key] === null) {
-        delete clearedFormData[key];
-        return clearedFormData;
+    let formData = Object.assign({}, clearedFormData);
+    Object.keys(formData).map((key) => {
+      if(formData[key] === null) {
+        delete formData[key];
+        return formData;
       }
-      if((typeof(clearedFormData[key]) === "object") && (!Array.isArray(clearedFormData[key]))) {
-        clearedFormData[key] = this.deletePropsWithoutData(clearedFormData[key]);
+      if((typeof(formData[key]) === "object") && (!Array.isArray(formData[key]))) {
+        formData[key] = this.deletePropsWithoutData(formData[key]);
       }
     });
 
-    return clearedFormData;
+    return formData;
   };
 
   /**
