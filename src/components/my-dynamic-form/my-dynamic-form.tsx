@@ -33,10 +33,10 @@ export class MyDynamicForm {
 
     let fieldId: any = CustomEvent.detail._values.id.match(/\w+$/)[0];
     let fieldValue: any = CustomEvent.detail._values.currentValue;
-    const currentFormData: any = this.filledData || this.data;
+    let currentFormData: any = this.data;
 
-    this.filledData = this.fillData(fieldId, fieldValue, currentFormData);
-    let clearedFormData = Object.assign({}, this.filledData);
+    currentFormData = this.fillData(fieldId, fieldValue, currentFormData);
+    let clearedFormData = Object.assign({}, currentFormData);
     this.changedData = this.deletePropsWithoutData(clearedFormData);
   };
 
@@ -45,6 +45,7 @@ export class MyDynamicForm {
   /**
    * Functions for filling data object
    */
+
   fillData(fieldId, fieldValue, currentFormData) {
     Object.keys(currentFormData).map((key) => {
       if(key === fieldId) {
@@ -61,6 +62,10 @@ export class MyDynamicForm {
     });
     return currentFormData;
   };
+
+  /**
+   * Functions for deleting properties which have value "null"
+   */
 
   deletePropsWithoutData(clearedFormData) {
     let formData = Object.assign({}, clearedFormData);
@@ -96,6 +101,10 @@ export class MyDynamicForm {
       }
     }
   };
+
+  /**
+   * Function for flatting data object for validation
+   */
 
   flatDataObject(data) {
     function flat(res, key, val, pre = '') {
