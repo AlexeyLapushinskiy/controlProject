@@ -27,7 +27,7 @@
 
      const schema = {
        "type": "object",
-       "required": [ "endDate", "min", "max" ],
+       "required": [ "startDate", "endDate", "min", "max", "checked", "sources" ],
        "properties": {
          "checked": {
            "$id": "data/properties/checked",
@@ -103,7 +103,7 @@
      };
 
      const form = {
-       "checked": true,
+       "checked": false,
        "duration": {
          "min": 5,
          "max": 10

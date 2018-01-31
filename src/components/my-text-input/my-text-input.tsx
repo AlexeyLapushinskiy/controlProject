@@ -27,6 +27,8 @@ export class MyTextInput {
   };
 
   componentWillLoad() {
+    // console.log("my-text-input");
+    // console.log(this.for);
     this.currentValue = this.value ? JSON.parse(this.value): "";
   };
 

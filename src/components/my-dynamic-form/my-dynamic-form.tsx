@@ -32,7 +32,7 @@ export class MyDynamicForm {
     this.changeValueChecked = true;
 
     let fieldId: any = CustomEvent.detail._values.id.match(/\w+$/)[0];
-    let fieldValue: any = CustomEvent.detail._values.currentValue;
+    let fieldValue: any = CustomEvent.detail._values.currentValue === false ? null : CustomEvent.detail._values.currentValue;
     let currentFormData: any = this.data;
 
     currentFormData = this.fillData(fieldId, fieldValue, currentFormData);
@@ -50,6 +50,7 @@ export class MyDynamicForm {
     Object.keys(currentFormData).map((key) => {
       if(key === fieldId) {
         if(Array.isArray(currentFormData[key])) {
+          currentFormData[key] = [];
           currentFormData[key][0] = fieldValue;
         } else {
           currentFormData[key] = fieldValue;
@@ -70,7 +71,7 @@ export class MyDynamicForm {
   deletePropsWithoutData(clearedFormData) {
     let formData = Object.assign({}, clearedFormData);
     Object.keys(formData).map((key) => {
-      if(formData[key] === null) {
+      if(formData[key] === null || formData[key] === false) {
         delete formData[key];
         return formData;
       }
@@ -88,18 +89,16 @@ export class MyDynamicForm {
 
   validateForm() {
     let validate = ajv.compile(this.schema);
+    let dataValidate;
     if(!this.changeValueChecked) {
       // ajv.validate is not working with nested objects, so we have to make a flat clean clone to validate it,
       // otherwise we should not use nested objects as it is working correctly without them
-      validate(this.form);
+      let flattedForm: any = this.deletePropsWithoutData(this.form);
+      dataValidate = validate(this.flatDataObject(flattedForm));
     } else {
-      let dataValidate = validate(this.flatDataObject(this.changedData));
-      if(dataValidate) {
-        this.invalidMessage = null;
-      } else {
-        this.invalidMessage = this.updateValidationMessage(validate);
-      }
+      dataValidate = validate(this.flatDataObject(this.changedData));
     }
+    dataValidate ? this.invalidMessage = null : this.invalidMessage = this.updateValidationMessage(validate);
   };
 
   /**
@@ -147,7 +146,7 @@ export class MyDynamicForm {
     if (prop === "button") {
       return <Tag id={schemaProps[prop].$id} for={prop} value={JSON.stringify(this.form[prop])} title={title} allTitles={this.allTitles}/> || null;
     }
-    return <Tag id={schemaProps[prop].$id} for={prop} value={this.form[prop] ? JSON.stringify(this.form[prop]) : this.form[schemaPropKey][prop]} title={title}/> || null;
+    return <Tag id={schemaProps[prop].$id} for={prop} value={(this.form[prop] || this.form[prop] === false) ? JSON.stringify(this.form[prop]) : this.form[schemaPropKey][prop]} title={title}/> || null;
   };
 
   createForm(schemaProps, schemaPropKey) {
