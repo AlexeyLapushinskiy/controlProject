@@ -136,6 +136,7 @@ export class MyDynamicForm {
     let Tag = this.mapping[type];
     let title: string = schemaProps[prop].title;
     let id: string = schemaProps[prop].$id;
+    let elementType: string = schemaProps[prop].type;
     this.allTitles[prop] = title;
 
     if (!title) {
@@ -144,9 +145,9 @@ export class MyDynamicForm {
     }
 
     if (prop === "button") {
-      return <Tag id={schemaProps[prop].$id} for={prop} value={JSON.stringify(this.form[prop])} title={title} allTitles={this.allTitles}/> || null;
+      return <Tag id={id} for={elementType} value={JSON.stringify(this.form[prop])} title={title} allTitles={this.allTitles}/> || null;
     }
-    return <Tag id={schemaProps[prop].$id} for={prop} value={(this.form[prop] || this.form[prop] === false) ? JSON.stringify(this.form[prop]) : this.form[schemaPropKey][prop]} title={title}/> || null;
+    return <Tag id={id} for={elementType} value={(this.form[prop] || this.form[prop] === false) ? JSON.stringify(this.form[prop]) : this.form[schemaPropKey][prop]} title={title}/> || null;
   };
 
   createForm(schemaProps, schemaPropKey) {
