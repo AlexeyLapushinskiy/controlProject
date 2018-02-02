@@ -1,4 +1,4 @@
-import { Element, Component, Prop, State, Listen, Event, EventEmitter } from '@stencil/core';
+import { Element, Component, Prop, State, Listen } from '@stencil/core';
 import * as ajv from 'ajv/dist/ajv.min.js';
 
 @Component({
