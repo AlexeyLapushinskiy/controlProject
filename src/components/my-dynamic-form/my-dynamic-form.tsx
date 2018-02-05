@@ -3,7 +3,8 @@ import * as ajv from 'ajv/dist/ajv.min.js';
 
 @Component({
   tag: 'my-dynamic-form',
-  shadow: true
+  shadow: true,
+  styleUrl: '../../../node_modules/bootstrap/dist/css/bootstrap.css'
 })
 export class MyDynamicForm {
 
@@ -184,8 +185,8 @@ export class MyDynamicForm {
         <div>
           {form}
           {message} <br/>
-        </div>
-        <input type="submit" value="Validate" onClick={() => this.validateForm()} />
+        </div><br/><br/>
+        <input class="btn" type="submit" value="Validate" onClick={() => this.validateForm()} />
       </div>
     );
   }

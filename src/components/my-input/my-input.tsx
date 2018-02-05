@@ -2,7 +2,8 @@ import { Component, Prop, State, Event, EventEmitter, Element } from '@stencil/c
 
 @Component({
 	tag: 'my-input',
-	shadow: true
+	shadow: true,
+  styleUrl: '../../../node_modules/bootstrap/dist/css/bootstrap.css'
 })
 export class MyInput {
 
@@ -36,10 +37,10 @@ export class MyInput {
 	render() {
 
     return (
-			<div>
+			<div class="form-group">
         <label>
           {this.title}<br/>
-				  <input id={this.id} type={this.for === "integer" ? "number" : "text"} value={this.currentValue} onInput={() => this.getAndPostTextValue(event)} /><br/><br/>
+				  <input class="form-control" id={this.id} type={this.for === "integer" ? "number" : "text"} value={this.currentValue} onInput={() => this.getAndPostTextValue(event)} /><br/><br/>
         </label>
 			</div>
 		);

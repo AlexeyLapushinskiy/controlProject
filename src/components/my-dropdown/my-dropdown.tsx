@@ -2,7 +2,8 @@ import { Component, Prop, State, Event, EventEmitter, Element } from '@stencil/c
 
 @Component({
 	tag: 'my-dropdown',
-	shadow: true
+	shadow: true,
+  styleUrl: '../../../node_modules/bootstrap/dist/css/bootstrap.css'
 })
 export class MyDropdown {
 
@@ -26,11 +27,13 @@ export class MyDropdown {
     const parsedValue = this.value ? JSON.parse(this.value): null;
 
     return (
-        <select id={this.id} value={this.currentValue} onClick={() => this.getSelectValues(event)}>
-          {parsedValue && parsedValue.map((value) =>
-            <option>{value}</option>
-          )}
-        </select>
+      <div class="input-group col-3">
+           <select class="custom-select" id={this.id} value={this.currentValue} onClick={() => this.getSelectValues(event)}>
+             {parsedValue && parsedValue.map((value) =>
+               <option>{value}</option>
+             )}
+           </select>
+      </div>
 		);
 	}
 }

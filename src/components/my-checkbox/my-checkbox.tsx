@@ -30,10 +30,10 @@ export class MyCheckbox {
 	  const parsedValue = this.value ? this.value : false;
 
 		return (
-			<div>
-				<label>
+			<div class="form-check">
+				<label class="form-check-label">
           {this.title}<br/>
-					<input id={this.id} value={`${this.currentValue}` || `${parsedValue}`} type="checkbox" onClick={() => {this.checkWatcher()}} /><br/><br/>
+					<input class="form-check-input" id={this.id} value={`${this.currentValue}` || `${parsedValue}`} type="checkbox" onClick={() => {this.checkWatcher()}} /><br/><br/>
 				</label>
 			</div>
 		);

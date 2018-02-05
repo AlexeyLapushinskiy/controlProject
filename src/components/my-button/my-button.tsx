@@ -1,3 +1,4 @@
+// import "my-button.css";
 import {Component, Element, Event, EventEmitter, Prop} from '@stencil/core';
 
 @Component({
@@ -15,7 +16,7 @@ export class MyButton {
 	render() {
 		return (
 		  <div>
-        <input type="submit" value="Validate" onClick={() => this.validateForm.emit()} />
+        <input class="btn" type="submit" value="Validate" onClick={() => this.validateForm.emit()} />
       </div>
 		);
 	}

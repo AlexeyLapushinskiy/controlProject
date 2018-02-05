@@ -20,7 +20,8 @@
   "dependencies": {
     "@stencil/core": "0.2.3",
     "ajv": "^6.0.1",
-    "bootstrap": "^4.0.0"
+    "bootstrap": "^4.0.0",
+    "pikaday": "^1.7.0"
   },
   "devDependencies": {
     "@stencil/dev-server": "latest",
