@@ -6,37 +6,6 @@
 
 
 import {
-  MyButton as MyButton
-} from './components/my-button/my-button';
-
-declare global {
-  interface HTMLMyButtonElement extends MyButton, HTMLElement {
-  }
-  var HTMLMyButtonElement: {
-    prototype: HTMLMyButtonElement;
-    new (): HTMLMyButtonElement;
-  };
-  interface HTMLElementTagNameMap {
-    "my-button": HTMLMyButtonElement;
-  }
-  interface ElementTagNameMap {
-    "my-button": HTMLMyButtonElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "my-button": JSXElements.MyButtonAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface MyButtonAttributes extends HTMLAttributes {
-      allTitles?: any;
-      for?: string;
-    }
-  }
-}
-
-
-import {
   MyCheckbox as MyCheckbox
 } from './components/my-checkbox/my-checkbox';
 
@@ -95,6 +64,39 @@ declare global {
     export interface MyComponentAttributes extends HTMLAttributes {
       first?: string;
       last?: string;
+    }
+  }
+}
+
+
+import {
+  MyDatepicker as MyDatepicker
+} from './components/my-datepicker/my-datepicker';
+
+declare global {
+  interface HTMLMyDatepickerElement extends MyDatepicker, HTMLElement {
+  }
+  var HTMLMyDatepickerElement: {
+    prototype: HTMLMyDatepickerElement;
+    new (): HTMLMyDatepickerElement;
+  };
+  interface HTMLElementTagNameMap {
+    "my-datepicker": HTMLMyDatepickerElement;
+  }
+  interface ElementTagNameMap {
+    "my-datepicker": HTMLMyDatepickerElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "my-datepicker": JSXElements.MyDatepickerAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface MyDatepickerAttributes extends HTMLAttributes {
+      for?: string;
+      id?: string;
+      title?: string;
+      value?: string;
     }
   }
 }
