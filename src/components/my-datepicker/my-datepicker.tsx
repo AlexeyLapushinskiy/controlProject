@@ -1,4 +1,6 @@
 import { Component, Prop, Event, EventEmitter, Element, State } from '@stencil/core';
+import * as Pikaday from 'pikaday/pikaday';
+
 
 @Component({
 	tag: 'my-datepicker',
@@ -23,11 +25,17 @@ export class MyDatepicker {
   };
 
 	render() {
+
+      const picker = new Pikaday({
+        field: document.getElementById('datepicker'),
+        format: 'D MMM YYYY'
+      });
+
 	  const parsedValue = this.value ? this.value : false;
 
 		return (
 		    <div>
-                <input type="text" id="datepicker" />
+                <input type={this.for} id="datepicker" value="9 Oct 2014" />
             </div>
 		);
 	}

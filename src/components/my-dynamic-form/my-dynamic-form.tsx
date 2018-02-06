@@ -138,17 +138,17 @@ export class MyDynamicForm {
     let title: string = schemaProps[prop].title;
     let id: string = schemaProps[prop].$id;
     let elementType: string = schemaProps[prop].type;
+    let elementFormat: string = schemaProps[prop].format || null;
     this.allTitles[prop] = title;
 
     if (!title) {
       schemaProps[prop].items ? title = schemaProps[prop].items.title : title = 'Unnamed field';
       this.allTitles[prop] = title;
     }
-
-    if (prop === "button") {
-      return <Tag id={id} for={elementType} value={JSON.stringify(this.form[prop])} title={title} allTitles={this.allTitles}/> || null;
-    }
-    return <Tag id={id} for={elementType} value={(this.form[prop] || this.form[prop] === false) ? JSON.stringify(this.form[prop]) : this.form[schemaPropKey][prop]} title={title}/> || null;
+    // if (prop === "button") {
+    //   return <Tag id={id} for={elementType} value={JSON.stringify(this.form[prop])} title={title} allTitles={this.allTitles}/> || null;
+    // }
+    return <Tag format={elementFormat} id={id} for={elementType} value={(this.form[prop] || this.form[prop] === false) ? JSON.stringify(this.form[prop]) : this.form[schemaPropKey][prop]} title={title}/> || null;
   };
 
   createForm(schemaProps, schemaPropKey) {

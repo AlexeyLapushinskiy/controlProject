@@ -11,12 +11,14 @@
 </head>
 <body>
 
+  <!--<input type="text" id="datepicker" />-->
+
   <my-dynamic-form>
     <my-input for="integer"></my-input>
     <my-input for="string"></my-input>
     <my-dropdown for="array"></my-dropdown>
-    <my-checkbox id="my-boolean-array" for="boolean"></my-checkbox>
-    <my-datepicker for="string"></my-datepicker>
+    <my-checkbox for="boolean"></my-checkbox>
+    <!--<my-datepicker for="object"></my-datepicker>-->
   </my-dynamic-form>
 
   <script>
@@ -27,11 +29,6 @@
        "type": "object",
        "required": [ "startDate", "endDate", "min", "max", "checked", "sources" ],
        "properties": {
-         "date": {
-           "$id": "data/properties/date",
-           "type": "string",
-           "title": "Date"
-         },
          "checked": {
            "$id": "data/properties/checked",
            "type": "boolean",
@@ -101,24 +98,19 @@
                "source1"
              ]
            }
+         },
+         "date": {
+           "$id": "data/properties/date",
+           "title": "Date",
+           "type": "object",
+           "format": "date"
          }
-       },
-       "date": {
-         "title": "date",
-         "type": "string",
-         "format": "date"
        }
      };
 
      const form = {
        "checked": false,
-       "date":
-          {
-              "key": "birthday",
-              "minDate": "1900-01-01",
-              "maxDate": new Date(),
-              "format": "yyyy-mm-dd"
-          },
+       "date": "9 Oct 2014",
        "duration": {
          "min": 5,
          "max": 10
@@ -135,8 +127,13 @@
     dynamicForm.schema = schema;
     dynamicForm.form = form;
 
-    const datapicker = new Pikaday({ field: document.querySelector('my-datepicker') });
+  </script>
 
+  <script src="pikaday.js"></script>
+
+  <script>
+//      const picker = new Pikaday({ field: document.querySelector('my-datepicker') });
+//      const picker = new Pikaday({ field: document.getElementById('datepicker') });
   </script>
 
 </body>

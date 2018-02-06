@@ -1,4 +1,5 @@
 import { Component, Prop, State, Event, EventEmitter, Element } from '@stencil/core';
+import * as Pikaday from 'pikaday/pikaday';
 
 @Component({
 	tag: 'my-input',
@@ -17,6 +18,7 @@ export class MyInput {
 	@Prop() for: string;
 	@Prop() value: any;
 	@Prop() title: string;
+	@Prop() elementFormat: any;
 
   getAndPostTextValue (event) {
     if(event.currentTarget.value) {
@@ -36,12 +38,26 @@ export class MyInput {
 
 	render() {
 
+	    let content = <input class="form-control" id={this.id} type={this.for === "integer" ? "number" : "text"} value={this.currentValue} onInput={() => this.getAndPostTextValue(event)} />;
+
+	    if (this.elementFormat) {
+	        console.log("datepicker");
+          const picker = new Pikaday({
+              field: document.getElementById('datepicker'),
+              format: 'D MMM YYYY'
+          });
+
+            content = <input type={this.for} id="datepicker" value="9 Oct 2014" />;
+
+        }
+
+
     return (
 			<div class="form-group">
-        <label>
-          {this.title}<br/>
-				  <input class="form-control" id={this.id} type={this.for === "integer" ? "number" : "text"} value={this.currentValue} onInput={() => this.getAndPostTextValue(event)} /><br/><br/>
-        </label>
+                <label>
+                    {this.title}<br/>
+                        {content}<br/><br/>
+                </label>
 			</div>
 		);
 	}

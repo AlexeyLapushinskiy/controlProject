@@ -190,6 +190,7 @@ declare global {
   }
   namespace JSXElements {
     export interface MyInputAttributes extends HTMLAttributes {
+      elementFormat?: any;
       for?: string;
       id?: string;
       title?: string;
