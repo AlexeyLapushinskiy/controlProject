@@ -102,12 +102,23 @@
              ]
            }
          }
+       },
+       "date": {
+         "title": "date",
+         "type": "string",
+         "format": "date"
        }
      };
 
      const form = {
        "checked": false,
-       "date": "2017/01/03",
+       "date":
+          {
+              "key": "birthday",
+              "minDate": "1900-01-01",
+              "maxDate": new Date(),
+              "format": "yyyy-mm-dd"
+          },
        "duration": {
          "min": 5,
          "max": 10

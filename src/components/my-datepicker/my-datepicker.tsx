@@ -9,7 +9,7 @@ export class MyDatepicker {
   @State() currentValue: boolean = false;
 
   @Prop() id: string;
-	@Prop() for: string;
+  @Prop() for: string;
   @Prop() value: string;
   @Prop() title: string;
 
@@ -26,9 +26,9 @@ export class MyDatepicker {
 	  const parsedValue = this.value ? this.value : false;
 
 		return (
-
-        <input type="text" id="datepicker" />
-
+		    <div>
+                <input type="text" id="datepicker" />
+            </div>
 		);
 	}
 }
