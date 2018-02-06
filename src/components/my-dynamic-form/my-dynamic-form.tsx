@@ -138,7 +138,7 @@ export class MyDynamicForm {
     let title: string = schemaProps[prop].title;
     let id: string = schemaProps[prop].$id;
     let elementType: string = schemaProps[prop].type;
-    let elementFormat: string = schemaProps[prop].format || null;
+    let elementFormat: any = schemaProps[prop].format || null;
     this.allTitles[prop] = title;
 
     if (!title) {
