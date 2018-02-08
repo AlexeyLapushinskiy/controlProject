@@ -11,15 +11,12 @@
 </head>
 <body>
 
-  <!--<input type="text" id="datepicker" />-->
-
   <my-dynamic-form>
     <my-input for="integer"></my-input>
     <my-input for="string"></my-input>
     <my-input for="object"></my-input>
     <my-dropdown for="array"></my-dropdown>
-    <my-checkbox for="boolean"></my-checkbox>
-    <!--<my-datepicker for="object"></my-datepicker>-->
+    <my-checkbox id="my-boolean-array" for="boolean"></my-checkbox>
   </my-dynamic-form>
 
   <script>
@@ -128,13 +125,6 @@
     dynamicForm.schema = schema;
     dynamicForm.form = form;
 
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"></script>
-
-  <script>
-//      const picker = new Pikaday({ field: document.querySelector('my-datepicker') });
-//      const picker = new Pikaday({ field: document.getElementById('datepicker') });
   </script>
 
 </body>

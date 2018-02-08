@@ -145,10 +145,17 @@ export class MyDynamicForm {
       schemaProps[prop].items ? title = schemaProps[prop].items.title : title = 'Unnamed field';
       this.allTitles[prop] = title;
     }
+
+    if(schemaProps[prop].type === "object" && schemaProps[prop].format === "date") {
+      return <Tag id={id} for={elementType} value={(this.form[prop] || this.form[prop] === false) ? JSON.stringify(this.form[prop]) : this.form[schemaPropKey][prop]} title={title}/>;
+    }
+
     // if (prop === "button") {
     //   return <Tag id={id} for={elementType} value={JSON.stringify(this.form[prop])} title={title} allTitles={this.allTitles}/> || null;
     // }
-    return <Tag format={elementFormat} id={id} for={elementType} value={(this.form[prop] || this.form[prop] === false) ? JSON.stringify(this.form[prop]) : this.form[schemaPropKey][prop]} title={title}/> || null;
+
+    return <Tag id={id} for={elementType} format={elementFormat} value={(this.form[prop] || this.form[prop] === false) ? JSON.stringify(this.form[prop]) : this.form[schemaPropKey][prop]} title={title}/> || null;
+
   };
 
   createForm(schemaProps, schemaPropKey) {

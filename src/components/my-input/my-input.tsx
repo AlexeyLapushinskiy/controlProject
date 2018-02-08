@@ -29,6 +29,16 @@ export class MyInput {
     this.postValue.emit(this.element);
   };
 
+  getContent() {
+    let content =
+      <input class="form-control" id={this.id} type={this.for === "integer" ? "number" : "text"} value={this.currentValue} onInput={() => this.getAndPostTextValue(event)} />;
+    if(this.format !== null) {
+      content =
+        <input class="form-control" id={this.id} type={this.for === "integer" ? "number" : "text"} onInput={() => this.getAndPostTextValue(event)} />;
+    }
+    return content;
+  };
+
   componentWillLoad() {
     this.currentValue = this.value ? JSON.parse(this.value): "";
     if(this.for === "integer") {
@@ -36,32 +46,22 @@ export class MyInput {
     }
   };
 
+  componentDidLoad() {
+    if(this.format !== null) {
+      let picker = new Pikaday({ field: this.element.shadowRoot.querySelector("input") });
+    }
+  };
+
 	render() {
 
-	    console.log(this.format);
-
-	    let content =
-            <input class="form-control" id={this.id} type={this.for === "integer" ? "number" : "text"} value={this.currentValue} onInput={() => this.getAndPostTextValue(event)} />;
-
-        if (this.format !== null) {
-	        console.log("datepicker");
-          const picker = new Pikaday({
-              field: document.getElementById('datepicker'),
-              format: 'D MMM YYYY'
-          });
-
-            content =
-                <input type={this.for} id="datepicker" value="9 Oct 2014" />;
-
-        }
-
+	  let content = this.getContent();
 
     return (
 			<div class="form-group">
-                <label>
-                    {this.title}<br/>
-                        {content}<br/><br/>
-                </label>
+        <label>
+          {this.title}<br/>
+          {content}<br/><br/>
+        </label>
 			</div>
 		);
 	}
