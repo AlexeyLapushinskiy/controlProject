@@ -6,17 +6,21 @@
   <title>Stencil Component Starter</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ajv/6.0.1/ajv.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"></script>
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.css"></script>-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment-with-locales.js"></script>
   <script src="/build/mycomponent.js"></script>
 
 </head>
 <body>
+
+  <!--<input id="datepicker" type="text">-->
 
   <my-dynamic-form>
     <my-input for="integer"></my-input>
     <my-input for="string"></my-input>
     <my-input for="object"></my-input>
     <my-dropdown for="array"></my-dropdown>
-    <my-checkbox id="my-boolean-array" for="boolean"></my-checkbox>
+    <my-checkbox for="boolean"></my-checkbox>
   </my-dynamic-form>
 
   <script>
@@ -124,6 +128,23 @@
     const dynamicForm = document.querySelector('my-dynamic-form');
     dynamicForm.schema = schema;
     dynamicForm.form = form;
+
+//     const picker = new Pikaday({
+//       field: document.getElementById("datepicker"),
+//       format: 'D MMM YYYY',
+//       onOpen : function() {
+//         console.log("onOpen");
+//         // picker.isVisible() ? picker.hide() : picker.show();
+//       },
+//       onClose : function() {
+//         console.log("onClose");
+//         // picker.isVisible() ? picker.hide() : picker.show();
+//       },
+//       onSelect: function() {
+//         console.log("onSelect");
+//         // console.log(this.getMoment().format('Do MMMM YYYY'));
+//       }
+//     });
 
   </script>
 

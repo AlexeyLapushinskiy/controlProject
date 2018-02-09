@@ -21,6 +21,7 @@
     "@stencil/core": "0.2.3",
     "ajv": "^6.0.1",
     "bootstrap": "^4.0.0",
+    "moment": "^2.20.1",
     "pikaday": "^1.7.0"
   },
   "devDependencies": {

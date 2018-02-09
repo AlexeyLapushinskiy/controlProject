@@ -1,10 +1,13 @@
 import { Component, Prop, State, Event, EventEmitter, Element } from '@stencil/core';
 import * as Pikaday from 'pikaday/pikaday.js';
+// import 'pikaday/css/pikaday.css';
+import 'moment/moment.js';
 
 @Component({
 	tag: 'my-input',
 	shadow: true,
   styleUrl: '../../../node_modules/bootstrap/dist/css/bootstrap.css'
+  // styleUrl: '../../../node_modules/pikaday/css/pikaday.css'
 })
 export class MyInput {
 
@@ -32,9 +35,9 @@ export class MyInput {
   getContent() {
     let content =
       <input class="form-control" id={this.id} type={this.for === "integer" ? "number" : "text"} value={this.currentValue} onInput={() => this.getAndPostTextValue(event)} />;
-    if(this.format !== null) {
+    if(this.format === "date") {
       content =
-        <input class="form-control" id={this.id} type={this.for === "integer" ? "number" : "text"} onInput={() => this.getAndPostTextValue(event)} />;
+        <input class="form-control" id={this.id} type="text" />;
     }
     return content;
   };
@@ -47,12 +50,32 @@ export class MyInput {
   };
 
   componentDidLoad() {
-    if(this.format !== null) {
-      let picker = new Pikaday({ field: this.element.shadowRoot.querySelector("input") });
+    if(this.for === "object" && this.format === "date") {
+      const picker = new Pikaday({
+        field: this.element.shadowRoot.querySelector("input"),
+        format: 'D MMM YYYY',
+        onClick: function() {
+          console.log("onClick");
+        },
+        // onOpen: function() {
+        //   console.log("onOpen");
+        //   picker.show();
+        // },
+        // onClose: function() {
+        //   console.log("onClose");
+        //   picker.hide();
+        // },
+        onSelect: function() {
+          console.log("onSelect");
+          console.log(this.getMoment().format('Do MMMM YYYY'));
+        }
+      });
     }
   };
 
 	render() {
+
+	  console.log("render");
 
 	  let content = this.getContent();
 

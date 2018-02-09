@@ -70,39 +70,6 @@ declare global {
 
 
 import {
-  MyDatepicker as MyDatepicker
-} from './components/my-datepicker/my-datepicker';
-
-declare global {
-  interface HTMLMyDatepickerElement extends MyDatepicker, HTMLElement {
-  }
-  var HTMLMyDatepickerElement: {
-    prototype: HTMLMyDatepickerElement;
-    new (): HTMLMyDatepickerElement;
-  };
-  interface HTMLElementTagNameMap {
-    "my-datepicker": HTMLMyDatepickerElement;
-  }
-  interface ElementTagNameMap {
-    "my-datepicker": HTMLMyDatepickerElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "my-datepicker": JSXElements.MyDatepickerAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface MyDatepickerAttributes extends HTMLAttributes {
-      for?: string;
-      id?: string;
-      title?: string;
-      value?: string;
-    }
-  }
-}
-
-
-import {
   MyDropdown as MyDropdown
 } from './components/my-dropdown/my-dropdown';
 
