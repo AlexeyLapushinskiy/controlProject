@@ -70,6 +70,8 @@ export class MyInput {
           console.log(this.getMoment().format('Do MMMM YYYY'));
         }
       });
+
+      picker._onClick = null;
     }
   };
 
