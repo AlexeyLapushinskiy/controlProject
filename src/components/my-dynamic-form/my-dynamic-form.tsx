@@ -30,7 +30,6 @@ export class MyDynamicForm {
 
   @Listen('postValue')
   postValueHandler(CustomEvent) {
-    // debugger
     console.log(CustomEvent);
     this.changeValueChecked = true;
 
@@ -50,14 +49,13 @@ export class MyDynamicForm {
    */
 
   fillData(fieldId, fieldValue, currentFormData) {
-    // debugger
     Object.keys(currentFormData).map((key) => {
       if(key === fieldId) {
         if(Array.isArray(currentFormData[key])) {
           currentFormData[key] = [];
           currentFormData[key][0] = fieldValue;
         } else {
-          if(key === "date") {
+          if(this.schema.properties[key].format === "date") {
             currentFormData[key].dateValue = fieldValue;
           } else {
             currentFormData[key] = fieldValue;
@@ -161,14 +159,12 @@ export class MyDynamicForm {
     if(schemaProps[prop].format === "date") {
       console.log(this.form[schemaPropKey]);
       console.log(this.form[prop]);
-      // debugger
       return <Tag id={id} format={elementFormat} for={elementType} value={(this.form[prop] || this.form[prop] !== "") ? this.form[prop] : ""} title={title}/>;
     }
 
     // if (prop === "button") {
     //   return <Tag id={id} for={elementType} value={JSON.stringify(this.form[prop])} title={title} allTitles={this.allTitles}/> || null;
     // }
-    // debugger
     return <Tag id={id} format={elementFormat} for={elementType} value={(this.form[prop] || this.form[prop] === false) ? JSON.stringify(this.form[prop]) : this.form[schemaPropKey][prop]} title={title}/> || null;
 
   };
