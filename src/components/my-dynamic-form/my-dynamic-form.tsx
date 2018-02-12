@@ -30,7 +30,6 @@ export class MyDynamicForm {
 
   @Listen('postValue')
   postValueHandler(CustomEvent) {
-    console.log(CustomEvent);
     this.changeValueChecked = true;
 
     let fieldId: any = CustomEvent.detail._values.id.match(/\w+$/)[0];
@@ -55,7 +54,7 @@ export class MyDynamicForm {
           currentFormData[key] = [];
           currentFormData[key][0] = fieldValue;
         } else {
-          if(this.schema.properties[key].format === "date") {
+          if(this.schema.properties[key] && this.schema.properties[key].format && this.schema.properties[key].format === "date") {
             currentFormData[key].dateValue = fieldValue;
           } else {
             currentFormData[key] = fieldValue;
@@ -86,9 +85,6 @@ export class MyDynamicForm {
       }
     });
 
-    console.log("formData");
-    console.log(formData);
-
     return formData;
   };
 
@@ -115,7 +111,6 @@ export class MyDynamicForm {
    */
 
   flatDataObject(data) {
-    console.log(data);
     function flat(res, key, val, pre = '') {
         let prefix: any = [pre, key].filter(v => v).join('.').match(/\w+$/);
         return (typeof val === 'object' && (!Array.isArray(val)))
@@ -157,8 +152,6 @@ export class MyDynamicForm {
 
     // if(schemaProps[prop].type === "object" && schemaProps[prop].format === "date") {
     if(schemaProps[prop].format === "date") {
-      console.log(this.form[schemaPropKey]);
-      console.log(this.form[prop]);
       return <Tag id={id} format={elementFormat} for={elementType} value={(this.form[prop] || this.form[prop] !== "") ? this.form[prop] : ""} title={title}/>;
     }
 

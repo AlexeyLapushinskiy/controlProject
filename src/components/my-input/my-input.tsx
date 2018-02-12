@@ -75,8 +75,6 @@ export class MyInput {
 
 	render() {
 
-	  console.log("render");
-
 	  let content = this.getContent();
 
     return (
