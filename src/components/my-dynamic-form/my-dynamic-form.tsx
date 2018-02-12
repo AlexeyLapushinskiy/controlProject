@@ -150,7 +150,6 @@ export class MyDynamicForm {
       this.allTitles[prop] = title;
     }
 
-    // if(schemaProps[prop].type === "object" && schemaProps[prop].format === "date") {
     if(schemaProps[prop].format === "date") {
       return <Tag id={id} format={elementFormat} for={elementType} value={(this.form[prop] || this.form[prop] !== "") ? this.form[prop] : ""} title={title}/>;
     }

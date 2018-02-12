@@ -50,6 +50,7 @@ export class MyInput {
       if(this.for === "integer") {
         this.currentValue = this.value || null;
       } else {
+
         this.currentValue = this.value ? JSON.parse(this.value): "";
       }
     }
