@@ -44,12 +44,11 @@
            "title": "Date",
            "type": "object",
            "format": "date",
-           "dateValue": {
-             "$id": "data/properties/date/dateValue",
-             "type": "string",
-             "title": "Date",
-             "default": "Sat Mar 03 2018",
-           }
+                 "dateValue": {
+                     "$id": "data/properties/date/dateValue",
+                     "type": "string",
+                     "title": "Date"
+                 }
          },
          "duration": {
            "$id": "data/properties/duration",
@@ -117,7 +116,7 @@
      const form = {
        "checked": false,
        "date": {
-         "dateValue": "Sat Mar 03 2018"
+         "dateValue": new Date()
        },
        "duration": {
          "min": 5,

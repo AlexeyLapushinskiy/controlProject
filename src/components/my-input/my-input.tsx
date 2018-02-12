@@ -46,13 +46,12 @@ export class MyInput {
 
     if(this.for === "object") {
       this.currentValue = this.value ? this.value: "";
-    } else {
-      if(this.for === "integer") {
-        this.currentValue = this.value || null;
-      } else {
-
-        this.currentValue = this.value ? JSON.parse(this.value): "";
-      }
+    }
+    if(this.for === "integer") {
+      this.currentValue = this.value || null;
+    }
+    if(this.for === "string") {
+      this.currentValue = this.value ? JSON.parse(this.value): "";
     }
   };
 
@@ -82,7 +81,7 @@ export class MyInput {
 			<div class="form-group">
         <label>
           {this.title}<br/>
-          {content}<br/><br/>
+          {content}<br/>
         </label>
 			</div>
 		);

@@ -151,7 +151,7 @@ export class MyDynamicForm {
     }
 
     if(schemaProps[prop].format === "date") {
-      return <Tag id={id} format={elementFormat} for={elementType} value={(this.form[prop] || this.form[prop] !== "") ? this.form[prop] : ""} title={title}/>;
+      return <Tag id={id} format={elementFormat} for={elementType} value={this.form[prop].dateValue || ""} title={title}/>;
     }
 
     // if (prop === "button") {
@@ -195,7 +195,7 @@ export class MyDynamicForm {
         <div>
           {form}
           {message} <br/>
-        </div><br/><br/>
+        </div><br/>
         <input class="btn" type="submit" value="Validate" onClick={() => this.validateForm()} />
       </div>
     );
