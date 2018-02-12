@@ -27,7 +27,7 @@
 
      const schema = {
        "type": "object",
-       "required": [ "startDate", "endDate", "min", "max", "checked", "sources" ],
+       "required": [ "startDate", "endDate", "min", "max", "checked", "sources", "dateValue" ],
        "properties": {
          "checked": {
            "$id": "data/properties/checked",
@@ -43,7 +43,13 @@
            "$id": "data/properties/date",
            "title": "Date",
            "type": "object",
-           "format": "date"
+           "format": "date",
+           "dateValue": {
+             "$id": "data/properties/date/value",
+             "type": "string",
+             "title": "Date",
+             "default": "Sat Mar 03 2018",
+           }
          },
          "duration": {
            "$id": "data/properties/duration",
@@ -110,7 +116,9 @@
 
      const form = {
        "checked": false,
-       "date": {},
+       "date": {
+         "value": "Sat Mar 03 2018"
+       },
        "duration": {
          "min": 5,
          "max": 10

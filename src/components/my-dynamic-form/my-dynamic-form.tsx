@@ -30,6 +30,7 @@ export class MyDynamicForm {
 
   @Listen('postValue')
   postValueHandler(CustomEvent) {
+    // debugger
     console.log(CustomEvent);
     this.changeValueChecked = true;
 
@@ -49,13 +50,18 @@ export class MyDynamicForm {
    */
 
   fillData(fieldId, fieldValue, currentFormData) {
+    // debugger
     Object.keys(currentFormData).map((key) => {
       if(key === fieldId) {
         if(Array.isArray(currentFormData[key])) {
           currentFormData[key] = [];
           currentFormData[key][0] = fieldValue;
         } else {
-          currentFormData[key] = fieldValue;
+          if(key === "date") {
+            currentFormData[key].dateValue = fieldValue;
+          } else {
+            currentFormData[key] = fieldValue;
+          }
         }
         return currentFormData;
       }
@@ -81,6 +87,9 @@ export class MyDynamicForm {
         formData[key] = this.deletePropsWithoutData(formData[key]);
       }
     });
+
+    console.log("formData");
+    console.log(formData);
 
     return formData;
   };
@@ -108,6 +117,7 @@ export class MyDynamicForm {
    */
 
   flatDataObject(data) {
+    console.log(data);
     function flat(res, key, val, pre = '') {
         let prefix: any = [pre, key].filter(v => v).join('.').match(/\w+$/);
         return (typeof val === 'object' && (!Array.isArray(val)))
@@ -147,14 +157,18 @@ export class MyDynamicForm {
       this.allTitles[prop] = title;
     }
 
-    if(schemaProps[prop].type === "object" && schemaProps[prop].format === "date") {
-      return <Tag id={id} format={elementFormat} for={elementType} value={(this.form[prop] || this.form[prop] === false) ? JSON.stringify(this.form[prop]) : this.form[schemaPropKey][prop]} title={title}/>;
+    // if(schemaProps[prop].type === "object" && schemaProps[prop].format === "date") {
+    if(schemaProps[prop].format === "date") {
+      console.log(this.form[schemaPropKey]);
+      console.log(this.form[prop]);
+      // debugger
+      return <Tag id={id} format={elementFormat} for={elementType} value={(this.form[prop] || this.form[prop] !== "") ? this.form[prop] : ""} title={title}/>;
     }
 
     // if (prop === "button") {
     //   return <Tag id={id} for={elementType} value={JSON.stringify(this.form[prop])} title={title} allTitles={this.allTitles}/> || null;
     // }
-
+    // debugger
     return <Tag id={id} format={elementFormat} for={elementType} value={(this.form[prop] || this.form[prop] === false) ? JSON.stringify(this.form[prop]) : this.form[schemaPropKey][prop]} title={title}/> || null;
 
   };

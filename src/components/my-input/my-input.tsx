@@ -1,5 +1,5 @@
 import { Component, Prop, State, Event, EventEmitter, Element } from '@stencil/core';
-import * as Pikaday from 'pikaday/pikaday.js';
+import * as Pikaday from 'pikaday/pikaday.js';   // disable the listener to support shadow DOM
 // import 'pikaday/css/pikaday.css';
 // import 'moment/moment.js';
 
@@ -43,9 +43,15 @@ export class MyInput {
   };
 
   componentWillLoad() {
-    this.currentValue = this.value ? JSON.parse(this.value): "";
-    if(this.for === "integer") {
-      this.currentValue = this.value || null;
+
+    if(this.for === "object") {
+      this.currentValue = this.value ? this.value: "";
+    } else {
+      if(this.for === "integer") {
+        this.currentValue = this.value || null;
+      } else {
+        this.currentValue = this.value ? JSON.parse(this.value): "";
+      }
     }
   };
 
@@ -53,7 +59,7 @@ export class MyInput {
     if(this.for === "object" && this.format === "date") {
       const picker = new Pikaday({
         field: this.element.shadowRoot.querySelector("input"),
-        format: 'D MMM YYYY',
+        // format: 'D MMM YYYY',
         onClick: function() {
           console.log("onClick");
         },
