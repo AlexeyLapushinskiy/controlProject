@@ -1,13 +1,11 @@
 import { Component, Prop, State, Event, EventEmitter, Element } from '@stencil/core';
 import * as Pikaday from 'pikaday/pikaday.js';   // disable the listener to support shadow DOM
-// import 'pikaday/css/pikaday.css';
-// import 'moment/moment.js';
+// import { getMoment } from 'moment/moment.js';
 
 @Component({
 	tag: 'my-input',
 	shadow: true,
   styleUrl: '../../../node_modules/bootstrap/dist/css/bootstrap.css'
-  // styleUrl: '../../../node_modules/pikaday/css/pikaday.css'
 })
 export class MyInput {
 
@@ -59,7 +57,7 @@ export class MyInput {
     if(this.for === "object" && this.format === "date") {
       const picker = new Pikaday({
         field: this.element.shadowRoot.querySelector("input"),
-        // format: 'D MMM YYYY',
+        format: 'D MMM YYYY',
         onClick: function() {
           console.log("onClick");
         },
@@ -69,7 +67,7 @@ export class MyInput {
         // }
       });
 
-      picker._onClick = null;
+      picker._onClick = null;   // disable the listener to support shadow DOM
     }
   };
 

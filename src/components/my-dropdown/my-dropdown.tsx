@@ -28,7 +28,7 @@ export class MyDropdown {
 
     return (
       <div class="input-group col-3">
-           <select class="custom-select" id={this.id} value={this.currentValue} onClick={() => this.getSelectValues(event)}>
+           <select class="custom-select" id={this.id} value={this.currentValue} onClick={(event) => this.getSelectValues(event)}>
              {parsedValue && parsedValue.map((value) =>
                <option>{value}</option>
              )}
